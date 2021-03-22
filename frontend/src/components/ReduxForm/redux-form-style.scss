@@ -1,0 +1,42 @@
+.has-search .form-control {
+  padding-left: 2.875rem;
+}
+
+.form-group {
+  width: 320px;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.icon-color {
+  color: #aaa;
+}
+
+.icon-focus {
+  color: #ee5f14;
+}
+
+.fieldWithIcon {
+  border: none;
+  border-bottom: 1px solid #b6b4b4;
+  border-radius: 0px;
+  margin-top: 10px;
+  height: 50px;
+  &:focus {
+    box-shadow: none;
+    border-bottom: 1px solid #ee5f14;
+    color: #ee5f14;
+  }
+  &:focus::placeholder {
+    color: #ee5f14;
+  }
+}
