@@ -1,12 +1,15 @@
-import React, { lazy, Suspense, Component } from "react";
-import { Switch, Route } from "react-router-dom";
-import Loader from "react-loader-spinner";
+/** @format */
 
-import "font-awesome/css/font-awesome.min.css";
-import "./App.css";
+import React, { lazy, Suspense, Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import Loader from 'react-loader-spinner'
+
+import 'font-awesome/css/font-awesome.min.css'
+import './App.css'
 
 // Routes
-const Login = lazy(() => import("./views/Login"));
+const Login = lazy(() => import('./views/Login'))
+const Dashboard = lazy(() => import('./views/Dashboard'))
 
 class App extends Component {
   render() {
@@ -15,15 +18,16 @@ class App extends Component {
         <Suspense
           fallback={
             <div className="loader-parent">
-              <Loader type="ThreeDots" color="#0f73ee" height="40" width="40" />{" "}
+              <Loader type="ThreeDots" color="#0f73ee" height="40" width="40" />{' '}
             </div>
           }
         >
           <Route exact path="/" render={(props) => <Login {...props} />} />
+          <Route exact path="/dashboard" render={(props) => <Dashboard {...props} />} />
         </Suspense>
       </Switch>
-    );
+    )
   }
 }
 
-export default App;
+export default App

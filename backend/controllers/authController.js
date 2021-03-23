@@ -31,19 +31,19 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new ErrorHandler("Email and Password is required", 400));
+    return next(new ErrorHandler("Email and Password is required", 404));
   }
 
   let user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(new ErrorHandler("No user found with that email address", 404));
+    return next(new ErrorHandler("Email is not found", 404));
   }
 
   const isPasswordMatch = await user.passwordCompare(password);
 
   if (!isPasswordMatch) {
-    return next(new ErrorHandler("Password is incorrect", 404));
+    return next(new ErrorHandler("Email or Password is incorrect", 404));
   }
 
   let token = user.getSignInToken();
