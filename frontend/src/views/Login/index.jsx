@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { withRouter } from 'react-router-dom'
@@ -31,6 +31,15 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
       })
     }
   }, [userLoginState])
+
+  useEffect(() => {
+    const user = Cookies.get('user')
+    if (user === undefined) {
+      history.push('/')
+    } else {
+      history.push('/dashboard')
+    }
+  }, [])
   const loginCompanyUser = (value) => {
     userLoginFunc(value)
   }

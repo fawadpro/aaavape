@@ -10,6 +10,8 @@ import './App.css'
 // Routes
 const Login = lazy(() => import('./views/Login'))
 const Dashboard = lazy(() => import('./views/Dashboard'))
+const SideBar = lazy(() => import('./components/SideBar'))
+const Order = lazy(() => import('./views/Order'))
 
 class App extends Component {
   render() {
@@ -23,7 +25,11 @@ class App extends Component {
           }
         >
           <Route exact path="/" render={(props) => <Login {...props} />} />
-          <Route exact path="/dashboard" render={(props) => <Dashboard {...props} />} />
+          <Route exact path="/login" render={(props) => <Login {...props} />} />
+          <SideBar>
+            <Route exact path="/dashboard" render={(props) => <Dashboard {...props} />} />
+            <Route exact path="/active-orders" render={(props) => <Order {...props} />} />
+          </SideBar>
         </Suspense>
       </Switch>
     )
