@@ -1,0 +1,29 @@
+/** @format */
+
+.loader-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  .content-area {
+    height: 300px;
+    width: 600px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: var(
+      --p-card-shadow,
+      0 0 0 1px rgba(63, 63, 68, 0.05),
+      0 1px 3px 0 rgba(63, 63, 68, 0.15)
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .title {
+      font-weight: bold;
+      font-size: 22px;
+    }
+  }
+}

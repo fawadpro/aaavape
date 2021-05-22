@@ -1,0 +1,103 @@
+/** @format */
+
+.App {
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue,
+    sans-serif;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.rc-pagination-item-active {
+  border-color: #f7af3a !important;
+  color: #f7af3a !important;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.line-style {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.col-1-4 {
+  flex: 0 0 12.666667%;
+  max-width: 12.666667%;
+  position: relative;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.col-md-2-without-padding {
+  flex: 0 0 16.666667%;
+  max-width: 16.666667%;
+  padding-left: 0px;
+  position: relative;
+  width: 100%;
+}
+
+.field-width {
+  font-weight: normal;
+  .width-normal {
+    width: 150px;
+  }
+  .width-medium {
+    width: 20%;
+  }
+  .width-large {
+    width: 30%;
+  }
+}
+
+.custom-table {
+  width: 100%;
+  color: #000;
+  font-family: 'system-ui';
+  thead th {
+    text-transform: uppercase;
+    font-weight: 700 !important;
+    font-size: 12px;
+    height: 40px;
+    padding-bottom: 10px;
+    padding: 7px;
+    color: #1d1e27;
+    background-color: #f6f7fa;
+  }
+  tbody tr td {
+    padding: 6px;
+    border-bottom: 1px solid #f2f2f4;
+    color: #50525e;
+    font-size: 14px;
+  }
+}

@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const errorMiddleware = require("./middlewares/errors");
 const user = require("./routes/user");
+const product = require("./routes/product");
 const app = express();
 
 bodyParser.urlencoded({ extended: false });
@@ -37,6 +38,7 @@ app.use(cors(corsOptions));
 
 // Route middlewares
 app.use("/api/v1", user);
+app.use("/api/v1", product);
 
 // Error middlewares
 app.use(errorMiddleware);

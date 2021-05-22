@@ -1,0 +1,107 @@
+/** @format */
+
+$background-color: #fff;
+$orange_color: #f7af3a;
+
+.product-container {
+  margin: 10px;
+  margin-top: 20px;
+  .push-to-button {
+    margin-right: 55px;
+  }
+  .search-filter-container {
+    background-color: white;
+    .search-filter-pilar {
+      border-radius: 6px;
+      border: 1px solid #e1e3e5;
+      padding: 6px;
+      max-width: 400px;
+      .search-icon {
+        font-size: 14px;
+        margin-left: 5px;
+      }
+      .search-input {
+        border: none;
+        display: inline-block;
+        width: 320px;
+        margin-left: 6px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .product-main-title {
+    font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue,
+      sans-serif;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 2.8rem;
+  }
+  .product-main-table {
+    margin-top: 15px;
+    border-radius: 10px;
+    background: $background-color;
+    box-shadow: var(
+      --p-card-shadow,
+      0 0 0 1px rgba(63, 63, 68, 0.05),
+      0 1px 3px 0 rgba(63, 63, 68, 0.15)
+    );
+    .tab-container {
+      border-bottom: 1px solid rgb(201, 204, 207);
+      display: grid;
+      grid-template-columns: 60px 147px 100px 100px;
+      text-align: center;
+      cursor: pointer;
+      padding-left: 20px;
+      color: #73777b;
+
+      .tab-active {
+        padding: 12px;
+        border-bottom: 2px solid $orange_color;
+        color: #000;
+      }
+      .tab-default {
+        padding: 12px;
+        padding-bottom: 0;
+        color: #73777b;
+      }
+    }
+    .main-body {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 11px !important;
+      margin-bottom: 15px;
+      height: calc(100vh - 265px);
+      overflow: auto;
+
+      .image-view-container {
+        margin-left: 20px;
+        .image {
+          width: 38px;
+          height: 28px;
+        }
+      }
+
+      .product-table thead th {
+        width: 200px;
+      }
+    }
+    .count-container {
+      font-size: 15px;
+      margin-left: 15px;
+      margin-bottom: 10px;
+      .count-content-data {
+        margin-left: 6px;
+        color: $orange_color;
+        margin-right: 2px;
+      }
+    }
+    .pagination-container {
+      margin-bottom: 10px;
+    }
+  }
+}

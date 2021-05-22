@@ -17,8 +17,7 @@ import './login-style.scss'
 const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
   useMemo(() => {
     if (userLoginState && userLoginState.success) {
-      Cookies.set('user', userLoginState && userLoginState.token)
-      history.push('/dashboard')
+      Cookies.set('aaavape_user', userLoginState && userLoginState.token)
     } else if (userLoginState && userLoginState.status === 'fail') {
       toast.error('Email or password is incorrect', {
         toastId: 'loginError',
@@ -33,7 +32,7 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
   }, [userLoginState])
 
   useEffect(() => {
-    const user = Cookies.get('user')
+    const user = Cookies.get('aaavape_user')
     if (user === undefined) {
       history.push('/')
     } else {

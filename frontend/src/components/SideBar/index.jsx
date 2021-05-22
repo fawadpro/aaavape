@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
 import _ from 'lodash'
+import axios from 'axios'
 
 import { menus } from './_nav_menu'
 import Avatar from '../../images/avatar.png'
@@ -18,10 +19,15 @@ const SideBar = ({ children, location, history }) => {
   const [childMenuActive, setChildMenuActive] = useState('')
   const [arrow, setArrow] = useState(false)
   const { pathname } = location
-  const token = Cookies.get('user')
+
+  const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
   useEffect(() => {
+    if (userDetail === false) {
+      history.push('/')
+    }
+
     if (menus.some((obj) => obj.url === pathname)) {
       setActive(pathname)
     }
@@ -47,6 +53,7 @@ const SideBar = ({ children, location, history }) => {
     if (menus.some((obj) => obj.url === menuUrl)) {
       setChildActive('')
       setArrow(false)
+      setChildMenuActive(menuUrl)
       setActive(menuUrl)
     }
   }
@@ -67,13 +74,27 @@ const SideBar = ({ children, location, history }) => {
     }
   }
 
-  const childToggle = () => {
-    setActive('')
-    setArrow(!arrow)
-    setChildActive(!childActive)
+  const childToggle = (menuUrl) => {
+    if (menus.some((obj) => obj.url === menuUrl)) {
+      setChildActive(!childActive)
+      setArrow(!arrow)
+      setChildMenuActive(menuUrl)
+      setActive(menuUrl)
+    }
   }
 
-  console.log('@@ child', childMenuActive)
+  if (userDetail) {
+    axios.interceptors.request.use(
+      (config) => {
+        config.headers.authorization = `${token}`
+        return config
+      },
+
+      (error) => {
+        return Promise.reject(error)
+      }
+    )
+  }
 
   return (
     <>
@@ -112,7 +133,7 @@ const SideBar = ({ children, location, history }) => {
                       <div
                         className="dropdown-container-item"
                         onClick={() => {
-                          Cookies.remove('user')
+                          Cookies.remove('aaavape_user')
                           history.push('/')
                         }}
                       >
@@ -133,7 +154,7 @@ const SideBar = ({ children, location, history }) => {
                       <>
                         <div
                           className={
-                            childActive && item && item.children && item.children.length
+                            item.url === active && item && item.children && item.children.length
                               ? 'active-child-tab-container'
                               : item.url === active
                               ? 'active-tab-container'
@@ -143,11 +164,12 @@ const SideBar = ({ children, location, history }) => {
                         >
                           <div
                             className="menu-grid"
-                            onClick={() =>
+                            onClick={() => {
+                              history.push(item.url)
                               item && item.children && item.children.length
-                                ? childToggle()
+                                ? childToggle(item.url)
                                 : toggle(item.url)
-                            }
+                            }}
                           >
                             <div className="icon-container">
                               <i className={item.icon}></i>
@@ -157,7 +179,7 @@ const SideBar = ({ children, location, history }) => {
                               <div className="children-container">
                                 <i
                                   className={
-                                    arrow
+                                    item.url === active
                                       ? 'fa fa-chevron-down icon-dropdown-size'
                                       : 'fa fa-chevron-right icon-dropdown-size'
                                   }
@@ -166,7 +188,7 @@ const SideBar = ({ children, location, history }) => {
                             )}
                           </div>
                         </div>
-                        {childActive &&
+                        {item.url === active &&
                           item &&
                           item.children &&
                           item.children.map((childItem, index) => (
@@ -177,6 +199,7 @@ const SideBar = ({ children, location, history }) => {
                                   : 'children-wrapper'
                               }
                               key={index}
+                              onClick={() => history.push(childItem.url)}
                             >
                               <div
                                 className="menu-grid"
@@ -191,7 +214,9 @@ const SideBar = ({ children, location, history }) => {
                   </div>
                 </div>
               </div>
-              <div> {children}</div>
+              <div className="col-md-10" style={{ background: '#f6f6f7' }}>
+                {children}
+              </div>
             </div>
           </div>
         </div>

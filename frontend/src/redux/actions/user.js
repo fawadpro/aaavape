@@ -14,6 +14,7 @@ export const UserLogin = (data) => {
     axios
       .post(`${config.apiPath}/api/v1/login`, data, { withCredentials: true })
       .then(function (response) {
+        window.location.href = '/dashboard'
         dispatch({ type: USER_LOGIN_LOADER, data: false })
         return dispatch({ type: USER_LOGIN, data: response.data })
       })
