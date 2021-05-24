@@ -1,0 +1,44 @@
+/** @format */
+
+.attached-main-container {
+  height: 44px;
+  width: 100%;
+  background-color: #fff;
+  padding: 8px 5px 8px 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  .attached-detail-header-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 5px 0 5px;
+    .attached-header-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  }
+  .attached-main-body {
+    padding: 3px 5px 0 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .attached-body-content {
+      font-size: 17px;
+      font-weight: bold;
+      font-family: 'Arial';
+      color: #1375ee;
+      font-weight: bold;
+    }
+    .attached-header-close {
+      font-size: 15px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}

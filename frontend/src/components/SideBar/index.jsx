@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { withRouter } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
@@ -23,11 +23,13 @@ const SideBar = ({ children, location, history }) => {
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
-  useEffect(() => {
+  useMemo(() => {
     if (userDetail === false) {
       history.push('/')
     }
+  }, [userDetail])
 
+  useEffect(() => {
     if (menus.some((obj) => obj.url === pathname)) {
       setActive(pathname)
     }
