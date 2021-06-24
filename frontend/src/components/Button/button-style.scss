@@ -11,3 +11,15 @@
     outline: none;
   }
 }
+
+.special-case {
+  border: none;
+  border-radius: 5px;
+  min-width: 130px;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px;
+  &:focus {
+    outline: none;
+  }
+}

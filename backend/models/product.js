@@ -9,12 +9,25 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, "Product cannot be empty"],
   },
-  price: {
-    type: Number,
-    required: [true, "Price could be not empty"],
-    default: 0.0,
-    maxLength: [5, "Product name cannot exceed 5 characters"],
-  },
+  price: [
+    {
+      price: {
+        type: Number,
+        required: [true, "Price could be not empty"],
+        default: 0.0,
+      },
+      comparePrice: {
+        type: Number,
+        required: [true, "Price could be not empty"],
+        default: 0.0,
+      },
+      costPerPrice: {
+        type: Number,
+        required: [true, "Price could be not empty"],
+        default: 0.0,
+      },
+    },
+  ],
   status: {
     type: String,
     default: "Active",
@@ -35,15 +48,20 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
   varient: [
     {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
+      image: {
+        public_id: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
       },
       name: {
         type: String,

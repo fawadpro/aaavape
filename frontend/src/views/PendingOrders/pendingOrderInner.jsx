@@ -5,12 +5,13 @@ import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import EllipsisWithTooltip from 'react-ellipsis-with-tooltip'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 import config from '../../config'
 
-const ProductInner = ({
-  item: { name, createdAt, price, status, images, _id },
+const OrderInner = ({
+  item: { orderId, createdAt, price, status, images, _id },
   activeTab,
   history,
 }) => {
@@ -49,39 +50,25 @@ const ProductInner = ({
     <>
       <tr className="field-width">
         <td className="width-normal">
-          <span> {name}</span>
-          <span className="image-view-container">
-            <img src={images && images[0].url} alt="Profile" className="image" />
+          <EllipsisWithTooltip placement="bottom">{orderId}</EllipsisWithTooltip>
+        </td>
+        <td className="width-normal">{moment(createdAt).format('YYYY-MM-DD')}</td>
+        <td className="width-normal">Fawad Shah</td>
+        <td className="width-normal">Pending</td>
+        <td className="width-normal">$ 200</td>
+        <td className="width-normal">
+          <span onClick={() => history.push(`/update-product/${_id}`)}>
+            <i className="fal fa-edit" style={{ cursor: 'pointer' }}></i>
+          </span>
+          <span
+            className="ml-2"
+            onClick={() => {
+              setDeleteToggleState(true)
+            }}
+          >
+            <i className="fal fa-trash-alt" style={{ cursor: 'pointer' }}></i>
           </span>
         </td>
-        <td className="width-normal">{price && price && price[0].price && price[0].price}</td>
-        <td className="width-normal">{status}</td>
-        <td className="width-normal">{moment(createdAt).format('YYYY-MM-DD')}</td>
-        {activeTab === 'deleted_products' ? (
-          <td className="width-normal">
-            <button className="active-button" onClick={() => activateProduct(_id)}>
-              {activateLoader ? (
-                <i className={`fa fa-circle-o-notch fa-spin`}></i>
-              ) : (
-                'Mark as active'
-              )}
-            </button>
-          </td>
-        ) : (
-          <td className="width-normal">
-            <span onClick={() => history.push(`/update-product/${_id}`)}>
-              <i className="fal fa-edit" style={{ cursor: 'pointer' }}></i>
-            </span>
-            <span
-              className="ml-2"
-              onClick={() => {
-                setDeleteToggleState(true)
-              }}
-            >
-              <i className="fal fa-trash-alt" style={{ cursor: 'pointer' }}></i>
-            </span>
-          </td>
-        )}
       </tr>
 
       <Modal isOpen={deleteToggleState} toggle={deleteToggle} className="general-content">
@@ -107,4 +94,4 @@ const ProductInner = ({
   )
 }
 
-export default withRouter(ProductInner)
+export default withRouter(OrderInner)

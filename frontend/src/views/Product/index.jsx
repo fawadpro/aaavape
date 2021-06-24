@@ -7,32 +7,70 @@ import Pagination from 'rc-pagination'
 import Button from '../../components/Button'
 import Loader from '../../components/Loader'
 import { siteConfig } from '../../components/Static/static'
-import { fetchProducts } from '../../redux/actions/products'
+import {
+  fetchProducts,
+  fetchDeleteProducts,
+  fetchFilterProduct,
+  fetchFilterDeletedProducts,
+} from '../../redux/actions/products'
 import ProductInner from './productInner'
 import './product-style.scss'
 import 'rc-pagination/assets/index.css'
 
-const Product = ({ fetchProductsFun, products, productLoader, history }) => {
+const Product = ({
+  fetchProductsFun,
+  products,
+  productLoader,
+  history,
+  fetchDeleteProductsFun,
+  fetchFilterProductFun,
+  fetchFilterDeletedProductFun,
+}) => {
   const [activeTab, setActiveTab] = useState('active')
+  const [productName, setProductName] = useState('')
   const [page, setPage] = useState(1)
 
   useEffect(() => {
-    fetchAllProducts()
-  }, [])
+    if (!productName) {
+      fetchAllProducts()
+    }
+    const timeoutId = setTimeout(() => {
+      if (activeTab === 'deleted_products' && productName) {
+        fetchFilterDeletedProductFun(productName)
+      } else if (activeTab === 'active' && productName) {
+        fetchFilterProductFun(productName)
+      } else {
+        return
+      }
+    }, 1000)
+    return () => clearTimeout(timeoutId)
+  }, [productName])
 
-  const fetchAllProducts = () => {
-    fetchProductsFun(page)
+  const fetchAllProducts = (pageSize) => {
+    fetchProductsFun(pageSize ? pageSize : page)
+  }
+
+  const handleQueryChange = (current) => {
+    setPage(current)
+    if (activeTab === 'deleted_products') {
+      fetchDeleteProductsFun(current)
+    } else {
+      fetchProductsFun(current)
+    }
+  }
+
+  const fetchDeletedProducts = (pageSize) => {
+    fetchDeleteProductsFun(pageSize ? pageSize : page)
   }
 
   const callBack = () => {
     history.push('/add-product')
   }
 
-  console.log('@@@@ products', products && products.products)
   return (
     <>
       {productLoader ? (
-        <Loader title="Products" />
+        <Loader title={activeTab === 'deleted_products' ? 'Deleted Products' : 'Products'} />
       ) : (
         <div className="product-container">
           <div className="row">
@@ -42,7 +80,15 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
               <div className="search-filter-container">
                 <div className="search-filter-pilar">
                   <span className="search-icon far fa-search"></span>
-                  <input type="search" placeholder="Filter Products" className="search-input" />
+                  <input
+                    type="search"
+                    placeholder="Filter Products"
+                    className="search-input"
+                    onChange={(e) => {
+                      setProductName(e.target.value)
+                    }}
+                    value={productName}
+                  />
                 </div>
               </div>
             </div>
@@ -52,6 +98,7 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
                 background={siteConfig.colors.buttonOrangeColor}
                 hoverBackground={siteConfig.colors.buttonOrangeColorHover}
                 callBack={callBack}
+                type="button"
               />
             </div>
           </div>
@@ -60,13 +107,23 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
             <div className="tab-container">
               <div
                 className={activeTab === 'active' ? 'tab-active' : 'tab-default'}
-                onClick={() => setActiveTab('active')}
+                onClick={() => {
+                  fetchAllProducts(1)
+                  setActiveTab('active')
+                  setPage(1)
+                  setProductName('')
+                }}
               >
                 Active
               </div>
               <div
                 className={activeTab === 'deleted_products' ? 'tab-active' : 'tab-default'}
-                onClick={() => setActiveTab('deleted_products')}
+                onClick={() => {
+                  fetchDeletedProducts(1)
+                  setActiveTab('deleted_products')
+                  setPage(1)
+                  setProductName('')
+                }}
               >
                 Deleted Products
               </div>
@@ -93,7 +150,7 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
                     {products &&
                       products.products &&
                       products.products.map((item, index) => (
-                        <ProductInner key={index} item={item} />
+                        <ProductInner key={index} item={item} activeTab={activeTab} />
                       ))}
                   </tbody>
                 )}
@@ -101,19 +158,22 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
             </div>
             <div className="row">
               <div className="col-md-5 count-container">
-                <span>
-                  Showing
-                  <span className="count-content-data">1-10 / </span>20
+                Showing
+                <span className="count-color">
+                  {(page - 1) * 10 + 1} -
+                  {products && products.total >= page * 10 ? page * 10 : products && products.total}
                 </span>
+                / {products && products.total}
               </div>
               <div className="col-md-6 text-right pagination-container">
                 <Pagination
                   className="ps-pagination "
                   showPrevNextJumpers={false}
+                  hideOnSinglePage={true}
                   pageSize={10}
-                  current={1}
-                  // onChange={this.handleQueryChange}
-                  total={products && products.products && products.products.length}
+                  current={page}
+                  onChange={handleQueryChange}
+                  total={products && products.total}
                 />
               </div>
             </div>
@@ -127,6 +187,9 @@ const Product = ({ fetchProductsFun, products, productLoader, history }) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     fetchProductsFun: (page) => dispatch(fetchProducts(page)),
+    fetchDeleteProductsFun: (page) => dispatch(fetchDeleteProducts(page)),
+    fetchFilterProductFun: (name) => dispatch(fetchFilterProduct(name)),
+    fetchFilterDeletedProductFun: (name) => dispatch(fetchFilterDeletedProducts(name)),
   }
 }
 

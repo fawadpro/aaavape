@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useMemo, useState, useLayoutEffect } from 'react'
 import RichTextEditor from 'react-rte'
 import _, { debounce } from 'lodash'
 import Swal from 'sweetalert2'
@@ -8,6 +8,23 @@ import Upload from '../../images/upload.png'
 
 import AttachedModalDetail from '../AttachmentModel'
 import './redux-form-style.scss'
+
+export const RenderVarientImage = ({ input }) => {
+  return (
+    <div>
+      <input
+        type="file"
+        name="uploadfile"
+        id="varimage"
+        style={{ display: 'none' }}
+        onChange={(e) => input.onChange(e.target.files[0])}
+      />
+      <label htmlFor="varimage" className="product-add-file">
+        Add Image
+      </label>
+    </div>
+  )
+}
 
 export class renderField extends Component {
   constructor(props) {
@@ -68,6 +85,8 @@ export class AttchmentModal extends Component {
       progressInfos: [],
       showProgressBar: false,
       disabledButton: false,
+      editSelectedFiles: [],
+      detectManual: false,
     }
   }
 
@@ -134,11 +153,21 @@ export class AttchmentModal extends Component {
 
   removeSpecificData = (value) => {
     const { selectedFiles } = this.state
-    let index = _.findIndex(selectedFiles, { name: value })
-    selectedFiles.splice(index, 1)
+
+    selectedFiles.splice(value, 1)
 
     this.setState({
       selectedFiles,
+    })
+  }
+
+  removeEditSepecificImages = (value) => {
+    const { editSelectedFiles } = this.state
+    let index = _.findIndex(editSelectedFiles, { public_id: value.public_id })
+    editSelectedFiles.splice(index, 1)
+
+    this.setState({
+      editSelectedFiles,
     })
   }
 
@@ -165,8 +194,27 @@ export class AttchmentModal extends Component {
     return true
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.detectManual === false) {
+      let blobImages =
+        nextProps &&
+        nextProps.input &&
+        nextProps.input.value &&
+        nextProps.input.value.map((item) => {
+          return item
+        })
+      this.setState({
+        selectedFiles: blobImages,
+      })
+    }
+  }
+
   addManualAttachments = (event) => {
     const files = Array.from(event.target.files)
+
+    this.setState({
+      detectManual: true,
+    })
 
     if (files.length > 10) {
       Swal.fire('Warning !', 'Maximum files upload limit is 10', 'warning')
@@ -175,11 +223,10 @@ export class AttchmentModal extends Component {
 
     files.forEach((file) => {
       if (this.validateFile(file)) {
-        file.percentage = 0
         this.setState((prevState) => {
           return {
             ...prevState,
-            selectedFiles: this.uniqueFiles([...prevState.selectedFiles, file]),
+            selectedFiles: [...prevState.selectedFiles, file],
           }
         })
       }
@@ -187,7 +234,9 @@ export class AttchmentModal extends Component {
   }
 
   uniqueFiles = (data) => {
+    const { input } = this.props
     let unique = _.uniqBy(data, 'name')
+    // input.onChange(unique)
     return unique
   }
 
@@ -207,6 +256,10 @@ export class AttchmentModal extends Component {
 
   fileDrop = (e) => {
     e.preventDefault()
+
+    this.setState({
+      detectManual: true,
+    })
     const files = e.dataTransfer.files
     if (files.length > 10) {
       Swal.fire('Warning !', 'Maximum files upload limit is 10', 'warning')
@@ -217,14 +270,17 @@ export class AttchmentModal extends Component {
     }
   }
   render() {
+    const { input } = this.props
     const {
       showOverlay,
       selectedFiles,
       showProgressBar,
       progressInfos,
-      disabledButton,
+      editSelectedFiles,
     } = this.state
-    let unique = _.uniqBy(selectedFiles, 'name')
+    let unique = selectedFiles
+
+    input.onChange(unique)
 
     return (
       <div className="attachment-main-container">
@@ -266,38 +322,41 @@ export class AttchmentModal extends Component {
           </div>
         </div>
 
-        {showProgressBar
-          ? progressInfos &&
-            progressInfos.map((progressInfo, index) => (
-              <div className="mb-2 mt-2" key={index}>
-                <span>{progressInfo.name}</span>
-                <div className="progress">
-                  <div
-                    className="progress-bar progress-bar-info"
-                    role="progressbar"
-                    aria-valuenow={progressInfo.percentage}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style={{ width: progressInfo.percentage + '%' }}
-                  >
-                    {progressInfo.percentage}%
-                  </div>
+        {showProgressBar ? (
+          progressInfos &&
+          progressInfos.map((progressInfo, index) => (
+            <div className="mb-2 mt-2" key={index}>
+              <span>{progressInfo.name}</span>
+              <div className="progress">
+                <div
+                  className="progress-bar progress-bar-info"
+                  role="progressbar"
+                  aria-valuenow={progressInfo.percentage}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={{ width: progressInfo.percentage + '%' }}
+                >
+                  {progressInfo.percentage}%
                 </div>
               </div>
-            ))
-          : unique &&
-            unique.length > 0 && (
-              <div className="attached-container">
-                {unique &&
-                  unique.map((item, index) => (
+            </div>
+          ))
+        ) : (editSelectedFiles && editSelectedFiles.length > 0) || (unique && unique.length) ? (
+          <div className="attached-container">
+            <div className="row">
+              {unique &&
+                unique.map((item, index) => (
+                  <div className="col-md-4">
                     <AttachedModalDetail
                       key={index}
                       item={item}
-                      removeData={(value) => this.removeSpecificData(value)}
+                      removeData={() => this.removeSpecificData(index)}
                     />
-                  ))}
-              </div>
-            )}
+                  </div>
+                ))}
+            </div>
+          </div>
+        ) : null}
 
         {/* <div className="attachment-upload-container">
           <button
@@ -313,8 +372,12 @@ export class AttchmentModal extends Component {
   }
 }
 
-export const RichTextComponent = ({ input }) => {
+export const RichTextComponent = ({ input, description }) => {
   const [value, setValue] = useState(RichTextEditor.createEmptyValue())
+
+  useMemo(() => {
+    setValue(description ? description : value)
+  }, [description])
 
   const onChange = (editorValue) => {
     setValue(editorValue)
@@ -325,13 +388,7 @@ export const RichTextComponent = ({ input }) => {
     input.onChange(value.toString('html'))
   }, 500)
 
-  return (
-    <RichTextEditor
-      value={value ? value : input.value}
-      onChange={onChange}
-      className="text-editor-font"
-    />
-  )
+  return <RichTextEditor value={value} onChange={onChange} className="text-editor-font" />
 }
 
 export class renderFieldWithIcon extends Component {

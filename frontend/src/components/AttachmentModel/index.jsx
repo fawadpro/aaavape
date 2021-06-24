@@ -3,15 +3,13 @@
 import React from 'react'
 import './attachedModalDetail.scss'
 
-const AttachedModalDetail = ({ item, removeData }) => {
+const AttachedModalDetail = ({ item, removeData, planUrl }) => {
   return (
-    <div className="attached-main-container">
-      <div className="attached-main-body">
-        <div className="attached-body-content">{item.name}</div>
-        <div className="attached-header-close" onClick={() => removeData(item.name)}>
-          X
-        </div>
+    <div className="image-container">
+      <div className="remove-icon">
+        <i className="fa fa-close" aria-hidden="true" onClick={() => removeData()} />
       </div>
+      <img src={item.url ? item.url : URL.createObjectURL(item)} alt="url" className="image-size" />
     </div>
   )
 }

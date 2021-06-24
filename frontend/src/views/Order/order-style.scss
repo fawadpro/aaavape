@@ -3,7 +3,7 @@
 $background-color: #fff;
 $orange_color: #f7af3a;
 
-.product-container {
+.order-container {
   margin: 10px;
   margin-top: 20px;
   .push-to-button {
@@ -31,7 +31,7 @@ $orange_color: #f7af3a;
       }
     }
   }
-  .product-main-title {
+  .order-main-title {
     font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue,
       sans-serif;
     word-wrap: break-word;
@@ -41,7 +41,7 @@ $orange_color: #f7af3a;
     font-size: 1.5rem;
     line-height: 2.8rem;
   }
-  .product-main-table {
+  .order-main-table {
     margin-top: 15px;
     border-radius: 10px;
     background: $background-color;
@@ -71,11 +71,11 @@ $orange_color: #f7af3a;
       }
     }
     .main-body {
-      margin-left: 20px;
-      margin-right: 20px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
       margin-top: 11px !important;
       margin-bottom: 15px;
-      height: calc(100vh - 265px);
+      height: calc(100vh - 205px);
       overflow: auto;
 
       .image-view-container {
@@ -103,7 +103,7 @@ $orange_color: #f7af3a;
         }
       }
 
-      .product-table thead th {
+      .order-table thead th {
         width: 200px;
       }
     }

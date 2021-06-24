@@ -16,7 +16,21 @@ const Products = (state = initialState, action) => {
         ...state,
         products: action.data,
       }
-
+    case ActionTypes.ADD_PRODUCT:
+      return {
+        ...state,
+        addProduct: action.data,
+      }
+    case ActionTypes.ADD_PRODUCT_LOADER:
+      return {
+        ...state,
+        addProductLoader: action.data,
+      }
+    case ActionTypes.FETCH_FILTER_PRODUCT_LOADER:
+      return {
+        ...state,
+        fetchFilterProduct: action.data,
+      }
     default:
       return {
         ...state,

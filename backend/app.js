@@ -1,14 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cloudinary = require("cloudinary");
 
 const errorMiddleware = require("./middlewares/errors");
 const user = require("./routes/user");
+const order = require("./routes/order");
 const product = require("./routes/product");
 const app = express();
 
-bodyParser.urlencoded({ extended: false });
-app.use(bodyParser.json());
+bodyParser.urlencoded({ limit: "50mb", extended: true });
+app.use(bodyParser.json({ limit: "50mb" }));
+
+console.log("@@@ data", process.env.CLOUDINARY_API_SECRET);
 
 const whitelist = ["http://localhost:3000", "http://localhost:3001"];
 
@@ -39,6 +43,14 @@ app.use(cors(corsOptions));
 // Route middlewares
 app.use("/api/v1", user);
 app.use("/api/v1", product);
+app.use("/api/v1", order);
+
+// Setting up cloudinary configuration
+cloudinary.config({
+  cloud_name: "aaavape",
+  api_key: "326354172469712",
+  api_secret: "Cf5MiD06T7-vzG1nTBx65NiePwE",
+});
 
 // Error middlewares
 app.use(errorMiddleware);

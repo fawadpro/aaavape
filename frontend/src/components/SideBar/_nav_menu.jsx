@@ -14,7 +14,7 @@ export const menus = [
     roles: ['Admin', 'Super Admin', 'Customer Support'],
     children: [
       {
-        name: 'Active Orders',
+        name: 'All Orders',
         url: '/order',
         icon: 'fas fa-home-lg-alt',
         roles: ['Admin', 'Super Admin', 'Customer Support'],

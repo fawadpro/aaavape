@@ -16,6 +16,7 @@ import SideBar from './components/SideBar'
 import Order from './views/Order'
 import Product from './views/Product'
 import ProductForm from './components/Forms/ProductForm'
+import PendingOrders from './views/PendingOrders'
 const Login = lazy(() => import('./views/Login'))
 
 class App extends Component {
@@ -24,7 +25,6 @@ class App extends Component {
     const userDetail = token !== undefined && jwt_decode(token)
     const userRole = userDetail && userDetail.role
 
-    console.log('@@@ userDetail', userRole)
     return (
       <Switch>
         <Suspense
@@ -51,6 +51,21 @@ class App extends Component {
               currentUser={userRole || null}
               roles={['super_admin']}
               component={ProductForm}
+            />
+            <PrivateRoute
+              exact
+              path="/update-product/:id"
+              currentUser={userRole || null}
+              roles={['super_admin']}
+              component={ProductForm}
+            />
+
+            <PrivateRoute
+              exact
+              path="/pending-orders"
+              currentUser={userRole || null}
+              roles={['super_admin']}
+              component={PendingOrders}
             />
             <Route exact path="/order" render={(props) => <Order {...props} />} />
             <Route exact path="/product" render={(props) => <Product {...props} />} />

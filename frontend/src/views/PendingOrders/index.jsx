@@ -7,40 +7,44 @@ import Pagination from 'rc-pagination'
 import Loader from '../../components/Loader'
 import { siteConfig } from '../../components/Static/static'
 
-import { fetchOrders, fetchFilterOrders } from '../../redux/actions/order'
-import OrderInner from './orderInner'
-import './order-style.scss'
+import { fetchAllPendingOrders, fetchFilterOrders } from '../../redux/actions/order'
+import PendingOrderInner from './pendingOrderInner'
+import './pending-orders-style.scss'
 import 'rc-pagination/assets/index.css'
 
-const Order = ({ fetchOrdersFun, allOrders, allOrderLoader, fetchFilterOrderFun }) => {
+const Order = ({
+  fetchAllPendingOrderFun,
+  pendingOrders,
+  pendingOrdersLoader,
+  fetchFilterOrderFun,
+}) => {
   const [orderId, setOrderId] = useState('')
   const [page, setPage] = useState(1)
 
   useEffect(() => {
     if (!orderId) {
-      fetchAllOrders()
-    }
-    const timeoutId = setTimeout(() => {
-      if (orderId) {
+      fetchAllPendingOrders()
+    } else {
+      const timeoutId = setTimeout(() => {
         fetchFilterOrderFun(orderId)
-      }
-    }, 1000)
-    return () => clearTimeout(timeoutId)
+      }, 1000)
+      return () => clearTimeout(timeoutId)
+    }
   }, [orderId])
 
-  const fetchAllOrders = (pageSize) => {
-    fetchOrdersFun(pageSize ? pageSize : page)
+  const fetchAllPendingOrders = (pageSize) => {
+    fetchAllPendingOrderFun(pageSize ? pageSize : page)
   }
 
   const handleQueryChange = (current) => {
     setPage(current)
-    fetchOrdersFun(current)
+    fetchAllPendingOrderFun(current)
   }
 
   return (
     <>
-      {allOrderLoader ? (
-        <Loader title="Orders" />
+      {pendingOrdersLoader ? (
+        <Loader title="Pending Orders" />
       ) : (
         <div className="order-container">
           <div className="row">
@@ -79,13 +83,15 @@ const Order = ({ fetchOrdersFun, allOrders, allOrderLoader, fetchFilterOrderFun 
                     </>
                   ))}
                 </thead>
-                {allOrders && allOrders.orders && allOrders.orders.length === 0 ? (
+                {pendingOrders && pendingOrders.orders && pendingOrders.orders.length === 0 ? (
                   <div className="mt-4">No orders found</div>
                 ) : (
                   <tbody>
-                    {allOrders &&
-                      allOrders.orders &&
-                      allOrders.orders.map((item, index) => <OrderInner key={index} item={item} />)}
+                    {pendingOrders &&
+                      pendingOrders.orders &&
+                      pendingOrders.orders.map((item, index) => (
+                        <PendingOrderInner key={index} item={item} />
+                      ))}
                   </tbody>
                 )}
               </table>
@@ -95,11 +101,11 @@ const Order = ({ fetchOrdersFun, allOrders, allOrderLoader, fetchFilterOrderFun 
                 Showing
                 <span className="count-color">
                   {(page - 1) * 10 + 1} -
-                  {allOrders && allOrders.total >= page * 10
+                  {pendingOrders && pendingOrders.total >= page * 10
                     ? page * 10
-                    : allOrders && allOrders.total}
+                    : pendingOrders && pendingOrders.total}
                 </span>
-                / {allOrders && allOrders.total}
+                / {pendingOrders && pendingOrders.total}
               </div>
               <div className="col-md-6 text-right pagination-container">
                 <Pagination
@@ -109,7 +115,7 @@ const Order = ({ fetchOrdersFun, allOrders, allOrderLoader, fetchFilterOrderFun 
                   pageSize={10}
                   current={page}
                   onChange={handleQueryChange}
-                  total={allOrders && allOrders.total}
+                  total={pendingOrders && pendingOrders.total}
                 />
               </div>
             </div>
@@ -122,7 +128,7 @@ const Order = ({ fetchOrdersFun, allOrders, allOrderLoader, fetchFilterOrderFun 
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrdersFun: (page) => dispatch(fetchOrders(page)),
+    fetchAllPendingOrderFun: (page) => dispatch(fetchAllPendingOrders(page)),
     fetchFilterOrderFun: (id) => dispatch(fetchFilterOrders(id)),
   }
 }
@@ -130,8 +136,8 @@ export const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     ...state,
-    allOrders: state.Order.allOrders,
-    allOrderLoader: state.Order.allOrderLoader,
+    pendingOrders: state.Order.pendingOrders,
+    pendingOrdersLoader: state.Order.pendingOrdersLoader,
   }
 }
 
