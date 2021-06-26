@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
 
+import { SiteRoute } from './utils/siteRoute'
 import PrivateRoute from './components/Auth/privateRoute'
 import 'font-awesome/css/font-awesome.min.css'
 import './App.scss'
@@ -17,6 +18,8 @@ import Order from './views/Order'
 import Product from './views/Product'
 import ProductForm from './components/Forms/ProductForm'
 import PendingOrders from './views/PendingOrders'
+import Home from './views/Home'
+import MainNav from './components/MainNav'
 const Login = lazy(() => import('./views/Login'))
 
 class App extends Component {
@@ -34,42 +37,49 @@ class App extends Component {
             </div>
           }
         >
-          <Route exact path="/" render={(props) => <Login {...props} />} />
-          <Route exact path="/login" render={(props) => <Login {...props} />} />
-          <SideBar>
-            <PrivateRoute
-              exact
-              path="/dashboard"
-              currentUser={userRole || null}
-              roles={['super_admin']}
-              component={Dashboard}
-            />
+          <Route path={SiteRoute.publicRoute} exact>
+            <MainNav>
+              <Route exact path="/" render={(props) => <Home {...props} />} />
+            </MainNav>
+          </Route>
 
-            <PrivateRoute
-              exact
-              path="/add-product"
-              currentUser={userRole || null}
-              roles={['super_admin']}
-              component={ProductForm}
-            />
-            <PrivateRoute
-              exact
-              path="/update-product/:id"
-              currentUser={userRole || null}
-              roles={['super_admin']}
-              component={ProductForm}
-            />
+          <Route path={[SiteRoute.privateRoute]}>
+            <Route exact path="/login" render={(props) => <Login {...props} />} />
+            <SideBar>
+              <PrivateRoute
+                exact
+                path="/dashboard"
+                currentUser={userRole || null}
+                roles={['super_admin']}
+                component={Dashboard}
+              />
 
-            <PrivateRoute
-              exact
-              path="/pending-orders"
-              currentUser={userRole || null}
-              roles={['super_admin']}
-              component={PendingOrders}
-            />
-            <Route exact path="/order" render={(props) => <Order {...props} />} />
-            <Route exact path="/product" render={(props) => <Product {...props} />} />
-          </SideBar>
+              <PrivateRoute
+                exact
+                path="/add-product"
+                currentUser={userRole || null}
+                roles={['super_admin']}
+                component={ProductForm}
+              />
+              <PrivateRoute
+                exact
+                path="/update-product/:id"
+                currentUser={userRole || null}
+                roles={['super_admin']}
+                component={ProductForm}
+              />
+
+              <PrivateRoute
+                exact
+                path="/pending-orders"
+                currentUser={userRole || null}
+                roles={['super_admin']}
+                component={PendingOrders}
+              />
+              <Route exact path="/order" render={(props) => <Order {...props} />} />
+              <Route exact path="/product" render={(props) => <Product {...props} />} />
+            </SideBar>
+          </Route>
         </Suspense>
       </Switch>
     )

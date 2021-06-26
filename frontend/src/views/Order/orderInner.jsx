@@ -57,9 +57,9 @@ const OrderInner = ({
         <td className="width-normal">Pending</td>
         <td className="width-normal">$ 200</td>
         <td className="width-normal">
-          <span onClick={() => history.push(`/update-product/${_id}`)}>
+          {/* <span onClick={() => history.push(`/update-product/${_id}`)}>
             <i className="fal fa-edit" style={{ cursor: 'pointer' }}></i>
-          </span>
+          </span> */}
           <span
             className="ml-2"
             onClick={() => {

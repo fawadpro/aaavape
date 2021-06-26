@@ -23,8 +23,9 @@ const SideBar = ({ children, location, history }) => {
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
+  console.log('@@@ login', history)
   useMemo(() => {
-    if (userDetail === false) {
+    if (userDetail === false && pathname !== '/login') {
       history.push('/')
     }
   }, [userDetail])
@@ -136,7 +137,7 @@ const SideBar = ({ children, location, history }) => {
                         className="dropdown-container-item"
                         onClick={() => {
                           Cookies.remove('aaavape_user')
-                          history.push('/')
+                          history.push('/login')
                         }}
                       >
                         Sign Out

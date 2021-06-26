@@ -1,0 +1,19 @@
+/** @format */
+
+.top-notifier-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--header-background-color);
+  color: #fff;
+  line-height: 70px;
+  width: 100%;
+  position: sticky;
+  .title-content {
+    font-weight: bold;
+    font-size: 26px;
+    font-family: var(--font-family);
+    padding: 20px 0 20px 0;
+  }
+}

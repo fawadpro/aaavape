@@ -34,7 +34,7 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
   useEffect(() => {
     const user = Cookies.get('aaavape_user')
     if (user === undefined) {
-      history.push('/')
+      history.push('/login')
     } else {
       history.push('/dashboard')
     }

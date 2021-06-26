@@ -1,0 +1,21 @@
+/** @format */
+
+.search-field-container {
+  .search-field {
+    background-color: #fff;
+    border-radius: 5px;
+    line-height: 35px;
+    width: 300px;
+    border: none;
+    padding-left: 30px;
+    &:focus {
+      outline: none;
+    }
+  }
+  .search-logo {
+    position: relative;
+    left: 25px;
+    color: #000;
+    font-weight: 500;
+  }
+}

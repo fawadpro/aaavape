@@ -1,5 +1,13 @@
 /** @format */
 
+:root {
+  --site-font-family: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+  --site-base-color: #f7af3a;
+  --mobile-width: 100vw;
+  --header-background-color: #333232;
+  --white-color: #fff;
+}
+
 .App {
   text-align: center;
   font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue,
