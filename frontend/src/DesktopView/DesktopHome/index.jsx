@@ -2,15 +2,21 @@
 
 import React from 'react'
 
-import TopNotificationDesktop from '../DesktopTopNotificationArea'
-import DesktopMainMenu from '../DesktopMainMenu'
 import DesktopSlider from '../DesktopSlider'
+import PromotionProduct from '../PromotionProduct'
+import FeaturesProduct from '../DesktopFeaturedProducts'
+import StoreLocatorHome from '../DesktopStoreLocatorHome'
+import HomeAccessories from '../DesktopHomeAccessories'
 
 const HomeDesktopView = () => {
   return (
-    <div className="home-container-header">
+    <>
       <DesktopSlider />
-    </div>
+      <PromotionProduct />
+      <FeaturesProduct />
+      <StoreLocatorHome />
+      <HomeAccessories />
+    </>
   )
 }
 

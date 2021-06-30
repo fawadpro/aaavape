@@ -1,11 +1,25 @@
 /** @format */
 
+@import url(//db.onlinewebfonts.com/c/4223340cd52dddaa529cb07e54bb0397?family=TrimPosterWebCondensed);
+@font-face {
+  font-family: 'TrimPosterWebCondensed';
+  src: url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.eot');
+  src: url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.woff2') format('woff2'),
+    url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.woff') format('woff'),
+    url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.ttf') format('truetype'),
+    url('//db.onlinewebfonts.com/t/4223340cd52dddaa529cb07e54bb0397.svg#TrimPosterWebCondensed')
+      format('svg');
+}
+
 :root {
   --site-font-family: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
   --site-base-color: #f7af3a;
   --mobile-width: 100vw;
   --header-background-color: #333232;
   --white-color: #fff;
+  --trim-font-family: 'TrimPosterWebCondensed';
 }
 
 .App {
@@ -164,5 +178,62 @@
     border-bottom: 1px solid #f2f2f4;
     color: #50525e;
     font-size: 14px;
+  }
+}
+
+.col-2-5 {
+  flex: 0 0 20%;
+  max-width: 20%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+// Global styles
+.button-container {
+  text-align: center;
+  border-style: none;
+  border-width: 1px;
+  border-radius: 0px;
+  padding: 10px 10px 10px;
+  margin-top: 13px;
+  .button-style {
+    padding: 8px;
+    background-color: #fff;
+    color: #232323;
+    width: 200px;
+    margin: 0 auto;
+    border-radius: 100px;
+    cursor: pointer;
+    &:hover {
+      background-color: #232323;
+      color: #fff;
+      transition: 0.3s ease-out;
+    }
+  }
+}
+
+.button-container-revert {
+  text-align: center;
+  border-style: none;
+  border-width: 1px;
+  border-radius: 0px;
+  padding: 10px 10px 10px;
+  margin-top: 13px;
+  .button-style {
+    padding: 8px;
+    background-color: #232323;
+    color: #fff;
+    width: 200px;
+    margin: 0 auto;
+    border-radius: 100px;
+    cursor: pointer;
+    &:hover {
+      background-color: #fff;
+      color: #232323;
+      transition: 0.3s ease-out;
+      border: 1px solid #232323;
+    }
   }
 }

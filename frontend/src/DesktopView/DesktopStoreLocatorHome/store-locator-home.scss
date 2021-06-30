@@ -1,0 +1,25 @@
+/** @format */
+
+.store-locator-home-container {
+  margin: 20px 150px 20px 150px;
+  background-color: #efefef;
+  .store-image-size {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .location-container {
+    padding: 15px 0 15px 0;
+    .location-title {
+      font-family: var(--trim-font-family);
+      font-size: 48px;
+      font-weight: bold;
+      color: #000;
+      letter-spacing: 3px;
+    }
+    .store-locations-list-container {
+      min-height: 250px;
+      overflow: auto;
+    }
+  }
+}

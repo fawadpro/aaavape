@@ -1,0 +1,24 @@
+/** @format */
+
+.home-accessories-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 70px 60px 30px 70px;
+  align-items: center;
+
+  .header-title {
+    margin: 10px 0 10px 0;
+    font-family: var(--trim-font-family);
+    font-weight: bold;
+    font-size: 48px;
+    color: #000;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .accessories-container-grid {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+  }
+}

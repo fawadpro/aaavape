@@ -221,16 +221,17 @@ export class AttchmentModal extends Component {
       return false
     }
 
-    files.forEach((file) => {
-      if (this.validateFile(file)) {
-        this.setState((prevState) => {
-          return {
-            ...prevState,
-            selectedFiles: [...prevState.selectedFiles, file],
-          }
-        })
-      }
-    })
+    files &&
+      files.forEach((file) => {
+        if (this.validateFile(file)) {
+          this.setState((prevState) => {
+            return {
+              ...prevState,
+              selectedFiles: [...prevState.selectedFiles, file],
+            }
+          })
+        }
+      })
   }
 
   uniqueFiles = (data) => {
