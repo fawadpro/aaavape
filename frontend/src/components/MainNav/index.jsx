@@ -4,6 +4,7 @@ import React from 'react'
 
 import TopNotificationDesktop from '../../DesktopView/DesktopTopNotificationArea'
 import DesktopMainMenu from '../../DesktopView/DesktopMainMenu'
+import DesktopFooter from '../../DesktopView/DesktopFooter'
 
 const DesktopMainNav = ({ children }) => {
   return (
@@ -11,6 +12,7 @@ const DesktopMainNav = ({ children }) => {
       <TopNotificationDesktop />
       <DesktopMainMenu />
       {children}
+      <DesktopFooter />
     </>
   )
 }

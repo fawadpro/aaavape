@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import StoreLocator from '../../images/store-locator.png'
+import StoreLocator from '../../images/store-locator.jpeg'
 import StoreLocatorCard from '../../components/StoreLocatorCard'
 import './store-locator-home.scss'
 

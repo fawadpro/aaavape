@@ -7,6 +7,7 @@ import PromotionProduct from '../PromotionProduct'
 import FeaturesProduct from '../DesktopFeaturedProducts'
 import StoreLocatorHome from '../DesktopStoreLocatorHome'
 import HomeAccessories from '../DesktopHomeAccessories'
+import Testimonial from '../DesktopTestimonial'
 
 const HomeDesktopView = () => {
   return (
@@ -16,6 +17,7 @@ const HomeDesktopView = () => {
       <FeaturesProduct />
       <StoreLocatorHome />
       <HomeAccessories />
+      {/* <Testimonial /> */}
     </>
   )
 }
