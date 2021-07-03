@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import AnimatedImage from '../../images/animated-dummy.gif'
+import AnimatedImage from '../../images/animated.gif'
 import './promotion-product-style.scss'
 
 const PromotionProduct = () => {

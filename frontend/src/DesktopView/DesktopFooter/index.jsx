@@ -11,36 +11,44 @@ const DesktopFooter = () => {
         <div className="row">
           <div className="col-md-2">
             <div className="col-main-title">
-              <span>Legal</span>
+              <span>Products</span>
             </div>
-            <div className="col-sub-title">Patents</div>
-            <div className="col-sub-title">Tobacco Rights</div>
-            <div className="col-sub-title">Privacy Policy and Your California Privacy Rights</div>
-            <div className="col-sub-title">User Generated Content Terms & Conditions</div>
+            <div className="col-sub-title">Savor Series</div>
+            <div className="col-sub-title">Matrix Series</div>
+            <div className="col-sub-title">CUB Series</div>
+            <div className="col-sub-title">Boost Series</div>
+            <div className="col-sub-title">Finesse Series</div>
+            <div className="col-sub-title">Atomizers</div>
+            <div className="col-sub-title">Coils</div>
+            <div className="col-sub-title">Apparel</div>
           </div>
           <div className="col-md-2">
             <div className="col-main-title">
-              <span>Terms</span>
+              <span>Discover</span>
             </div>
-            <div className="col-sub-title">Terms of Use</div>
-            <div className="col-sub-title">Text Messaging Terms and Conditions</div>
-            <div className="col-sub-title">Site Requirements</div>
+            <div className="col-sub-title">About Us</div>
+            <div className="col-sub-title">News</div>
+            <div className="col-sub-title">Partners</div>
+            <div className="col-sub-title">Store Locator</div>
+            <div className="col-sub-title">To Be Distributor Or Wholesale </div>
           </div>
           <div className="col-md-2">
             <div className="col-main-title">
-              <span>Contact Us</span>
+              <span>Customer Service</span>
             </div>
-            <div className="col-sub-title">Mon-Fri, 8AM-10PM & Sat-Sun 10AM-8PM EST</div>
-            <div className="col-sub-title">1-877-614-8873</div>
+            <div className="col-sub-title">Contact Us</div>
+            <div className="col-sub-title">FAQ'S</div>
+            <div className="col-sub-title">Delivery & Returns Information </div>
+            <div className="col-sub-title">Warranty</div>
+            <div className="col-sub-title">AAA Care</div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-4">
             <div className="col-main-title">
-              <span>FAQS</span>
+              <span>SHIP FROM LOCAL WAREHOUSE</span>
             </div>
-            <div className="col-sub-title">Vuse Warnings & Information</div>
-            <div className="col-sub-title">General Information</div>
+            <div className="col-sub-title">Russia</div>
+            <div className="col-sub-title">Philippine</div>
           </div>
-          <div className="col-md-2"></div>
           <div className="col-md-2">
             <div className="col-main-title">
               <span> Follow Us! </span>
@@ -50,6 +58,15 @@ const DesktopFooter = () => {
             </span>
             <span className="icon-size ml-3">
               <i className="fab fa-instagram"></i>
+            </span>
+            <span className="icon-size ml-3">
+              <i className="fab fa-youtube"></i>
+            </span>
+            <span className="icon-size">
+              <i className="fab fa-twitter"></i>
+            </span>
+            <span className="icon-size ml-3">
+              <i className="fab fa-linkedin"></i>
             </span>
           </div>
         </div>

@@ -13,7 +13,7 @@ const DesktopMainMenu = () => {
         <div className="col-md-3">
           <img src={TransparentLogo} alt="aaavape logo" className="logo-image" />
         </div>
-        <div className="col-md-5 text-right">
+        <div className="col-md-6 text-right">
           <SearchInput />
         </div>
         <div className="col-md-3">

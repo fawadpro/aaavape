@@ -1,0 +1,107 @@
+/** @format */
+
+.top-navigation-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  font-family: var(--gotham-font-family);
+  font-weight: bold;
+  font-size: 16px;
+  color: #1d1d1d;
+  width: 100%;
+  margin: 0 auto;
+
+  .menu-item {
+    font-family: inherit;
+  }
+  .menu-item-hover {
+    color: var(--site-base-color);
+    cursor: pointer;
+  }
+  .nav-icon {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    z-index: 99999999999;
+    color: #fff;
+    font-size: 24px;
+  }
+  .edges-width {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .icon-vertical {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+  }
+  .children-container {
+    position: absolute;
+    min-width: 160px;
+    background-color: #fff;
+    min-height: 190px;
+    z-index: 99999999;
+    width: 100%;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translate(0, 20px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 20px;
+    padding-left: 20px;
+    box-shadow: inset 0 17px 25px -17px rgba(0, 0, 0, 0.15);
+    .children-row {
+      display: grid;
+      grid-template-columns: 16% 28% 28% 28%;
+      border-bottom: 1px solid #ebebeb;
+      .change-list-item {
+        margin-top: 20px;
+      }
+      .item {
+        min-width: 230px;
+        text-align: left;
+        margin-bottom: 20px;
+        .image-size {
+          width: 200px;
+          height: 200px;
+        }
+        .menu-active {
+          background: var(--site-base-color);
+          padding: 8px;
+          border-radius: 50px;
+          color: #fff;
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 10px;
+          padding-left: 20px;
+        }
+        .menu-non-active {
+          margin-bottom: 10px;
+          font-size: 13px;
+          font-weight: bold;
+          margin-left: 20px;
+          cursor: pointer;
+        }
+        .data-container {
+          display: flex;
+          flex-flow: column;
+          margin-left: 15px;
+          padding: 5px 10px;
+          border-left: 3px solid #d8d8d8;
+          line-break: anywhere;
+          .title {
+            font-size: 17px;
+            font-weight: bold;
+            font-family: var(--gotham-font-family);
+          }
+          .subtitle {
+            font-size: 14px;
+            font-weight: 400;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+}
