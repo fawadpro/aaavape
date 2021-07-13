@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react'
+import { isMobile } from 'react-device-detect'
 import Arrows from './Arrows.jsx'
 import './Slideshow.scss'
 
@@ -183,7 +184,7 @@ class Slideshow extends Component {
       <div
         style={{
           position: 'relative',
-          height: '470px',
+          height: isMobile ? '260px' : '470px',
           width: this.props.width || '100%',
         }}
       >

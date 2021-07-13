@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
+import { isMobile } from 'react-device-detect'
 
 import { SiteRoute } from './utils/siteRoute'
 import PrivateRoute from './components/Auth/privateRoute'
@@ -38,9 +39,13 @@ class App extends Component {
           }
         >
           <Route path={SiteRoute.publicRoute} exact>
-            <MainNav>
+            {isMobile ? (
               <Route exact path="/" render={(props) => <Home {...props} />} />
-            </MainNav>
+            ) : (
+              <MainNav>
+                <Route exact path="/" render={(props) => <Home {...props} />} />
+              </MainNav>
+            )}
           </Route>
 
           <Route path={[SiteRoute.privateRoute]}>

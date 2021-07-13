@@ -5,6 +5,7 @@ import React from 'react'
 import MobileMainMenu from '../MobileMainMenu'
 import MobileSlider from '../MobileSlider'
 import TopNotificationMobile from '../MobileTopNotificationArea'
+import MobilePromotionProduct from '../MobilePromotionProduct'
 
 const HomeMobile = () => {
   return (
@@ -12,6 +13,7 @@ const HomeMobile = () => {
       <TopNotificationMobile />
       <MobileMainMenu />
       <MobileSlider />
+      <MobilePromotionProduct />
     </>
   )
 }

@@ -1,5 +1,10 @@
 /** @format */
 
+import Cub30 from '../../images/top_menu_desktop/cub-30-Pink-Camo.png'
+import Cub40 from '../../images/top_menu_desktop/cub40-Abstract.png'
+import SavorKit from '../../images/top_menu_desktop/savor-tank.png'
+import RedButtefly from '../../images/top_menu_desktop/Red-Butterfly.png'
+
 export const siteConfig = {
   colors: {
     buttonOrangeColor: '#F7AF3A',
@@ -20,5 +25,109 @@ export const siteConfig = {
     { name: 'Payment Status', width: 'medium' },
     { name: 'Price', width: 'medium' },
     { name: 'Actions', width: 'medium' },
+  ],
+  menuItem: {
+    'Box Mod Kit': [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+    'POD Systems': [
+      {
+        image: SavorKit,
+        title: 'Savor Kit',
+        description: 'Durable reliable & consitent...',
+      },
+      {
+        image: RedButtefly,
+        title: 'SVAORPRO 30W POD SYSTEM 3.0ML',
+        description: 'Where technology meet art...',
+      },
+    ],
+    'POD Mod Systems': [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+    'Vape Pen Kits': [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+    Disponsable: [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+    Tanks: [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+    Coils: [
+      {
+        image: Cub40,
+        title: 'Cub 40 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+      {
+        image: Cub30,
+        title: 'Cub 30 Mod Kit',
+        description: 'Where technology meet art...',
+      },
+    ],
+  },
+  promotion: [
+    {
+      name: 'Get more out of your vape',
+      description: [{ name: 'Long-lasting pods and battery.' }],
+    },
+    {
+      name: 'DESIGNED TO FIT YOU',
+      description: [
+        { name: '7 Bold Colors 3' },
+        { name: 'Premium Flavors 3' },
+        { name: 'Nicotine Levels' },
+      ],
+    },
+    {
+      name: 'SIMPLE OPERATION',
+      description: [{ name: 'Compact with a consistent' }, { name: 'quiet draw' }],
+    },
   ],
 }

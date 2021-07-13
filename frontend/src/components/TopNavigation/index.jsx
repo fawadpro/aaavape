@@ -2,12 +2,18 @@
 
 import React, { useState } from 'react'
 
+import { siteConfig } from '../../components/Static/static'
 import './top-navigation.scss'
 
 const TopNavigation = ({ menuContent }) => {
-  const [childrenItem, setChildrenItem] = useState([])
   const [showChildren, setShowChildren] = useState(false)
   const [itemId, setItemId] = useState('')
+  const [childrenArray, setChildrenArray] = useState([])
+  const [childrenArrayItem, setChildrenArrayItem] = useState('')
+
+  const data = siteConfig.menuItem
+  let objectKeys = Object.keys(data)
+
   return (
     <>
       <div className="top-navigation-container" onMouseLeave={() => setItemId('')}>
@@ -29,6 +35,8 @@ const TopNavigation = ({ menuContent }) => {
                         return item && item.children && item.children.length
                           ? setTimeout(() => {
                               setShowChildren(true)
+                              setChildrenArray(data[objectKeys[0]])
+                              setChildrenArrayItem(objectKeys[0])
                             }, 200)
                           : null
                       }}
@@ -68,76 +76,46 @@ const TopNavigation = ({ menuContent }) => {
             }}
           >
             <div className="children-row">
-              <div className="item justify-content-center align-self-center detail-data change-list-item">
-                <div className="menu-active">
-                  Box Mod Kit
-                  <span className="float-right mr-2">
-                    <i className="fas fa-arrow-right"></i>
-                  </span>
-                </div>
-                <div className="menu-non-active">POD Systems</div>
-                <div className="menu-non-active">POD Mod Systems</div>
-                <div className="menu-non-active">Vape Pen Kits</div>
-                <div className="menu-non-active">Disponsable</div>
-                <div className="menu-non-active">Tanks</div>
-                <div className="menu-non-active">Coils</div>
+              <div className="item mt-4">
+                {objectKeys.map((item, index) => (
+                  <div
+                    className={childrenArrayItem === item ? 'menu-active' : 'menu-non-active'}
+                    key={index}
+                    onClick={() => {
+                      setChildrenArrayItem(item)
+                      setChildrenArray(data[item])
+                    }}
+                  >
+                    {item}
+                    {childrenArrayItem === item && (
+                      <span className="float-right mr-2">
+                        <i className="fas fa-arrow-right"></i>
+                      </span>
+                    )}
+                  </div>
+                ))}
               </div>
 
-              <div className="item ">
+              <div className="ml-4">
                 <div className="row">
-                  <div className="col-md-5">
-                    <img
-                      src="https://cdn.shopify.com/s/files/1/0505/5014/5221/products/BlackCrack_1024x1024@2x.png?v=1608722666"
-                      alt="menu"
-                      className="image-size"
-                    />
-                  </div>
-                  <div className="col-md-6 justify-content-center align-self-center detail-data">
-                    <div className="data-container">
-                      <div className="title">Hello</div>
-                      <div className="subtitle">
-                        kjfasdjkfjkadsjkfjasdjkfjkdsjkfjkasdjkfjjsjkfsjkdfkjds ...
+                  {childrenArray &&
+                    childrenArray.map((item, index) => (
+                      <div className="col-md-4" key={index}>
+                        <div className="item">
+                          <div className="row">
+                            <div className="col-md-5">
+                              <img src={item.image} alt="menu" className="image-size" />
+                            </div>
+                            <div className="col-md-6 justify-content-center align-self-center detail-data">
+                              <div className="data-container">
+                                <div className="title">{item.title}</div>
+                                <div className="subtitle">{item.description}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="row">
-                  <div className="col-md-5">
-                    <img
-                      src="https://cdn.shopify.com/s/files/1/0505/5014/5221/products/BlackCrack_1024x1024@2x.png?v=1608722666"
-                      alt="menu"
-                      className="image-size"
-                    />
-                  </div>
-                  <div className="col-md-6 justify-content-center align-self-center detail-data">
-                    <div className="data-container">
-                      <div className="title">Hello</div>
-                      <div className="subtitle">
-                        kjfasdjkfjkadsjkfjasdjkfjkdsjkfjkasdjkfjjsjkfsjkdfkjds ...
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="item">
-                <div className="row">
-                  <div className="col-md-5">
-                    <img
-                      src="https://cdn.shopify.com/s/files/1/0505/5014/5221/products/BlackCrack_1024x1024@2x.png?v=1608722666"
-                      alt="menu"
-                      className="image-size"
-                    />
-                  </div>
-                  <div className="col-md-6 justify-content-center align-self-center detail-data">
-                    <div className="data-container">
-                      <div className="title">Hello</div>
-                      <div className="subtitle">
-                        kjfasdjkfjkadsjkfjasdjkfjkdsjkfjkasdjkfjjsjkfsjkdfkjds ...
-                      </div>
-                    </div>
-                  </div>
+                    ))}
                 </div>
               </div>
             </div>
