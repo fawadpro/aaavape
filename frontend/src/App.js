@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode'
 import { isMobile } from 'react-device-detect'
 
 import { SiteRoute } from './utils/siteRoute'
+import AnimationLogo from './components/AnimationLogo'
 import PrivateRoute from './components/Auth/privateRoute'
 import 'font-awesome/css/font-awesome.min.css'
 import './App.scss'
@@ -22,8 +23,8 @@ import PendingOrders from './views/PendingOrders'
 import Home from './views/Home'
 import MainNav from './components/MainNav'
 import MobileMainNav from './components/MobileMainNav'
-import DesktopProductDetail from './DesktopView/DesktopProductDetail'
 const Login = lazy(() => import('./views/Login'))
+const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
 class App extends Component {
   render() {
@@ -36,7 +37,7 @@ class App extends Component {
         <Suspense
           fallback={
             <div className="loader-parent">
-              <Loader type="ThreeDots" color="#0f73ee" height="40" width="40" />{' '}
+              <AnimationLogo />
             </div>
           }
         >

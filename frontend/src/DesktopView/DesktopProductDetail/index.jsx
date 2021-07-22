@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
 import Truncate from 'react-truncate-html'
@@ -11,7 +11,6 @@ import { siteConfig } from '../../components/Static/static'
 import Button from '../../components/Button'
 import QuantityPicker from '../../components/QuantityPicker'
 import './product-detail.scss'
-import { lastIndexOf } from 'lodash'
 
 const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState, match }) => {
   const [activeSlider, setActiveSlider] = useState(siteConfig.dummyImages[0])
@@ -33,7 +32,10 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
           <div className="col-md-6">
             <div className="image-slider-container">
               <div className="product-image">
-                <img src={activeSlider} className="image-size" />
+                <img
+                  src={product && product.images && product.images[0].url}
+                  className="image-size"
+                />
               </div>
               <div className="row slider-image-container">
                 {siteConfig.dummyImages.map((item, index) => (
