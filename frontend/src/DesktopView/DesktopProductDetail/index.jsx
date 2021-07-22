@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
+import Truncate from 'react-truncate-html'
 import { withRouter } from 'react-router-dom'
 
 import { fetchPublicSingleProduct } from '../../redux/actions/products'
@@ -58,7 +59,8 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
               </div>
               <div className="product-info-status">In Stock</div>
               <div className="product-info-description">
-                <div
+                <Truncate
+                  lines={6}
                   dangerouslySetInnerHTML={{
                     __html: product && product.description && product.description.substring(0, 500),
                   }}
