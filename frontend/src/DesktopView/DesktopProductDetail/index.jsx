@@ -13,7 +13,7 @@ import QuantityPicker from '../../components/QuantityPicker'
 import './product-detail.scss'
 
 const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState, match }) => {
-  const [activeSlider, setActiveSlider] = useState(siteConfig.dummyImages[0])
+  const [activeSlider, setActiveSlider] = useState()
   const [activeArrowOffset, setActiveArrowOffset] = useState({ left: '356.583px' })
   const [tabActive, setTabActive] = useState('detail')
 
@@ -21,7 +21,20 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
     fetchPublicSingleProductFun(match.params.id)
   }, [])
 
+  useMemo(() => {
+    setActiveSlider(
+      singleProductState &&
+        singleProductState.product &&
+        singleProductState.product.varient &&
+        singleProductState.product.varient[0]
+    )
+  }, [singleProductState && singleProductState.product])
+
   const product = singleProductState && singleProductState.product
+  const renderVarients =
+    product &&
+    product.varient &&
+    product.varient.map((item) => ({ label: item.name, value: item.name, item }))
 
   console.log('@@ single', product)
 
@@ -33,23 +46,40 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
             <div className="image-slider-container">
               <div className="product-image">
                 <img
-                  src={product && product.images && product.images[0].url}
+                  src={
+                    singleProductState &&
+                    singleProductState.product &&
+                    singleProductState.product.varient &&
+                    singleProductState.product.varient.length > 0
+                      ? activeSlider && activeSlider.image && activeSlider.image.url
+                      : singleProductState &&
+                        singleProductState.product &&
+                        singleProductState.product &&
+                        singleProductState.product.images[0] &&
+                        singleProductState.product.images[0].url
+                  }
                   className="image-size"
                 />
               </div>
               <div className="row slider-image-container">
-                {siteConfig.dummyImages.map((item, index) => (
-                  <div
-                    onClick={() => setActiveSlider(item)}
-                    className={
-                      item === activeSlider
-                        ? 'col-md-3 active-image-slider'
-                        : 'col-md-3 none-active-image-slider'
-                    }
-                  >
-                    <img src={item} key={index} className="slider-image-size" />
-                  </div>
-                ))}
+                {product &&
+                  product.varient &&
+                  product.varient.map((item, index) => (
+                    <div
+                      onClick={() => setActiveSlider(item)}
+                      className={
+                        item === activeSlider
+                          ? 'col-md-3 active-image-slider'
+                          : 'col-md-3 none-active-image-slider'
+                      }
+                    >
+                      <img
+                        src={item && item.image && item.image.url}
+                        key={index}
+                        className="slider-image-size"
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -57,7 +87,17 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
             <div className="product-info-container">
               <div className="product-info-title">{product && product.name}</div>
               <div className="product-info-price">
-                {`$ ${product && product.price && product.price[0] && product.price[0].price}`}
+                {singleProductState &&
+                singleProductState.product &&
+                singleProductState.product.varient &&
+                singleProductState.product.varient.length > 0
+                  ? `$ ${
+                      activeSlider &&
+                      activeSlider.price &&
+                      activeSlider.price[0] &&
+                      activeSlider.price[0].price
+                    }`
+                  : `$ ${product && product.price && product.price[0] && product.price[0].price}`}
               </div>
               <div className="product-info-status">In Stock</div>
               <div className="product-info-description">
@@ -68,9 +108,17 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
                   }}
                 />
               </div>
-              <div className="product-info-dropdown">
-                <Select options={[{ label: 'Fawad', value: 'fawad' }]} placeholder="Select Color" />
-              </div>
+              {product && product.varient && product.varient.length > 0 && (
+                <div className="product-info-dropdown">
+                  <div className="mb-2 mt-2 font-weight-bold">Varient</div>
+                  <Select
+                    options={renderVarients}
+                    placeholder="Select Varient"
+                    onChange={(value) => setActiveSlider(value.item)}
+                  />
+                </div>
+              )}
+
               <div className="container">
                 <div className="row product-info-add-to-cart">
                   <div className="col-md-4 justify-content-center align-self-center">

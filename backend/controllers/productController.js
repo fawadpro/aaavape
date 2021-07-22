@@ -210,8 +210,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let varientResult = await req.body.varient.map((item) =>
     cloudinary.v2.uploader.upload(item.varient_image, {
       folder: "product_images",
-      width: 150,
-      crop: "scale",
     })
   );
 

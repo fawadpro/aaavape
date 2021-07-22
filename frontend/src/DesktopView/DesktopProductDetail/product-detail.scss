@@ -39,8 +39,10 @@
     .active-image-slider {
       border: 2px solid #f4b223;
       background: #ebebeb;
-      border-radius: 5px;
+      border-radius: 7px;
       padding: 0px;
+      margin:0 10px 0 10px;
+      border-radius: 5px;
       width: 100%;
       cursor: pointer;
     }
@@ -48,6 +50,9 @@
     .none-active-image-slider {
       padding: 0px;
       width: 100%;
+      background: #ebebeb;
+      margin:0 10px 0 10px;
+      border-radius: 7px;
       cursor: pointer;
     }
   }
