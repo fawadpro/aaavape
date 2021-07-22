@@ -1,17 +1,23 @@
 /** @format */
 
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
 import TransparentLogo from '../../images/transparent-logo.png'
 import SearchInput from '../../components/SearchField'
 import './desktop-main-menu.scss'
 
-const DesktopMainMenu = () => {
+const DesktopMainMenu = ({ history }) => {
   return (
     <div className="main-menu-container conatiner">
       <div className="row">
         <div className="col-md-3">
-          <img src={TransparentLogo} alt="aaavape logo" className="logo-image" />
+          <img
+            src={TransparentLogo}
+            alt="aaavape logo"
+            className="logo-image"
+            onClick={() => history.push('/')}
+          />
         </div>
         <div className="col-md-6 text-right">
           <SearchInput />
@@ -33,4 +39,4 @@ const DesktopMainMenu = () => {
   )
 }
 
-export default DesktopMainMenu
+export default withRouter(DesktopMainMenu)
