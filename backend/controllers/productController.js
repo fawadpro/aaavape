@@ -9,8 +9,6 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   let result = await req.body.images.map((item) =>
     cloudinary.v2.uploader.upload(item, {
       folder: "product_images",
-      width: 150,
-      crop: "scale",
     })
   );
 
@@ -19,8 +17,6 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
   let varientResult = await req.body.varient.map((item) =>
     cloudinary.v2.uploader.upload(item.varient_image, {
       folder: "product_images",
-      width: 150,
-      crop: "scale",
     })
   );
 
@@ -146,6 +142,20 @@ exports.activateProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get single product => /api/v1/admin/product/:id
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    product,
+  });
+});
+
+// Get single product => /api/v1/admin/product/:id
+exports.getSinglePublicProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {

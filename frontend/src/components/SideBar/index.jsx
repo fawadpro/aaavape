@@ -148,78 +148,76 @@ const SideBar = ({ children, location, history }) => {
               </div>
             </div>
           </div>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-2-without-padding">
-                <div className="left-nav-container">
-                  <div className="menu-overflow">
-                    {menus.map((item, index) => (
-                      <>
+          <div className="row">
+            <div className="col-md-2-without-padding">
+              <div className="left-nav-container">
+                <div className="menu-overflow">
+                  {menus.map((item, index) => (
+                    <>
+                      <div
+                        className={
+                          item.url === active && item && item.children && item.children.length
+                            ? 'active-child-tab-container'
+                            : item.url === active
+                            ? 'active-tab-container'
+                            : 'content-container'
+                        }
+                        key={index}
+                      >
                         <div
-                          className={
-                            item.url === active && item && item.children && item.children.length
-                              ? 'active-child-tab-container'
-                              : item.url === active
-                              ? 'active-tab-container'
-                              : 'content-container'
-                          }
-                          key={index}
+                          className="menu-grid"
+                          onClick={() => {
+                            history.push(item.url)
+                            item && item.children && item.children.length
+                              ? childToggle(item.url)
+                              : toggle(item.url)
+                          }}
                         >
-                          <div
-                            className="menu-grid"
-                            onClick={() => {
-                              history.push(item.url)
-                              item && item.children && item.children.length
-                                ? childToggle(item.url)
-                                : toggle(item.url)
-                            }}
-                          >
-                            <div className="icon-container">
-                              <i className={item.icon}></i>
-                            </div>
-                            <div>{item.name}</div>
-                            {item && item.children && item.children.length && (
-                              <div className="children-container">
-                                <i
-                                  className={
-                                    item.url === active
-                                      ? 'fa fa-chevron-down icon-dropdown-size'
-                                      : 'fa fa-chevron-right icon-dropdown-size'
-                                  }
-                                />
-                              </div>
-                            )}
+                          <div className="icon-container">
+                            <i className={item.icon}></i>
                           </div>
-                        </div>
-                        {item.url === active &&
-                          item &&
-                          item.children &&
-                          item.children.map((childItem, index) => (
-                            <div
-                              className={
-                                childItem.url === childMenuActive
-                                  ? 'active-wrapper'
-                                  : 'children-wrapper'
-                              }
-                              key={index}
-                              onClick={() => history.push(childItem.url)}
-                            >
-                              <div
-                                className="menu-grid"
-                                onClick={() => childMenuToggle(childItem.url)}
-                              >
-                                <div>{childItem.name}</div>
-                              </div>
+                          <div>{item.name}</div>
+                          {item && item.children && item.children.length && (
+                            <div className="children-container">
+                              <i
+                                className={
+                                  item.url === active
+                                    ? 'fa fa-chevron-down icon-dropdown-size'
+                                    : 'fa fa-chevron-right icon-dropdown-size'
+                                }
+                              />
                             </div>
-                          ))}
-                      </>
-                    ))}
-                  </div>
+                          )}
+                        </div>
+                      </div>
+                      {item.url === active &&
+                        item &&
+                        item.children &&
+                        item.children.map((childItem, index) => (
+                          <div
+                            className={
+                              childItem.url === childMenuActive
+                                ? 'active-wrapper'
+                                : 'children-wrapper'
+                            }
+                            key={index}
+                            onClick={() => history.push(childItem.url)}
+                          >
+                            <div
+                              className="menu-grid"
+                              onClick={() => childMenuToggle(childItem.url)}
+                            >
+                              <div>{childItem.name}</div>
+                            </div>
+                          </div>
+                        ))}
+                    </>
+                  ))}
                 </div>
               </div>
-              <div className="col-md-10" style={{ background: '#f6f6f7' }}>
-                {children}
-              </div>
+            </div>
+            <div className="col-md-10" style={{ background: '#f6f6f7' }}>
+              {children}
             </div>
           </div>
         </div>

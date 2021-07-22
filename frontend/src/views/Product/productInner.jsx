@@ -48,13 +48,15 @@ const ProductInner = ({
   return (
     <>
       <tr className="field-width">
-        <td className="width-normal">
+        <td className="width-large-x">
           <span> {name}</span>
-          <span className="image-view-container">
-            <img src={images && images[0].url} alt="Profile" className="image" />
-          </span>
+          {images && images.length > 0 ? (
+            <span className="image-view-container">
+              <img src={images && images[0].url} alt="Profile" className="image" />
+            </span>
+          ) : null}
         </td>
-        <td className="width-normal">{price && price && price[0].price && price[0].price}</td>
+        <td className="width-normal">$ {price && price && price[0].price && price[0].price}</td>
         <td className="width-normal">{status}</td>
         <td className="width-normal">{moment(createdAt).format('YYYY-MM-DD')}</td>
         {activeTab === 'deleted_products' ? (

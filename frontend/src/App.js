@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
+import { isMobile } from 'react-device-detect'
 
 import { SiteRoute } from './utils/siteRoute'
 import PrivateRoute from './components/Auth/privateRoute'
@@ -20,6 +21,8 @@ import ProductForm from './components/Forms/ProductForm'
 import PendingOrders from './views/PendingOrders'
 import Home from './views/Home'
 import MainNav from './components/MainNav'
+import MobileMainNav from './components/MobileMainNav'
+import DesktopProductDetail from './DesktopView/DesktopProductDetail'
 const Login = lazy(() => import('./views/Login'))
 
 class App extends Component {
@@ -38,9 +41,20 @@ class App extends Component {
           }
         >
           <Route path={SiteRoute.publicRoute} exact>
-            <MainNav>
-              <Route exact path="/" render={(props) => <Home {...props} />} />
-            </MainNav>
+            {isMobile ? (
+              <MobileMainNav>
+                <Route exact path="/" render={(props) => <Home {...props} />} />
+              </MobileMainNav>
+            ) : (
+              <MainNav>
+                <Route exact path="/" render={(props) => <Home {...props} />} />
+                <Route
+                  exact
+                  path="/product-detail/:id"
+                  render={(props) => <DesktopProductDetail {...props} />}
+                />
+              </MainNav>
+            )}
           </Route>
 
           <Route path={[SiteRoute.privateRoute]}>

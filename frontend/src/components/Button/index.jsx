@@ -24,6 +24,8 @@ const Button = (props) => {
       style={{
         backgroundColor: hover ? props.hoverBackground : props.background,
         color: props.butttonColor ? props.buttonColor : white,
+        borderRadius: props.borderRadius ? props.borderRadius : 5,
+        padding: props.padding ? props.padding : 6,
       }}
     >
       {loader ? <i className={`fa fa-circle-o-notch fa-spin`}></i> : props.title}

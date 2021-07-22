@@ -1,0 +1,78 @@
+/** @format */
+
+.mobile-promotion-product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-position: right bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  border-style: none;
+  border-width: 1px;
+  border-radius: 0px;
+  margin: 0px 0px 10px;
+  padding: 10px;
+  background-image: url('../../images/promotion-background.jpeg');
+  min-height: 700px;
+  .promotion-title {
+    margin-top: 10px;
+    font-family: var(--trim-font-family), 'Arial Black', Arial, sans-serif;
+    font-size: 30px;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+
+  .image-gif {
+    width: 50px;
+    height: 300px;
+  }
+}
+
+.promotion-slider {
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+  .slideshowSlider {
+    white-space: nowrap;
+    transition: ease 1000ms;
+  }
+  .slide-item {
+    display: inline-block;
+    height: 80px;
+    width: 100%;
+    border-radius: 40px;
+    .slider-item-title {
+      font-family: var(--trim-font-family), 'Arial Black', Arial, sans-serif;
+      font-size: 26px;
+      color: #fff;
+      letter-spacing: 4px;
+    }
+    .slider-item-description {
+      color: #fff;
+      font-weight: normal;
+      font-size: 18px;
+    }
+  }
+
+  .slideshowDots {
+    text-align: center;
+  }
+
+  .slideshowDot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 15px 7px 0px;
+
+    background-color: #c4c4c4;
+  }
+
+  .slideshowDot.active {
+    background-color: #000;
+  }
+}
+
+/* Buttons */

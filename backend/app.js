@@ -7,6 +7,7 @@ const errorMiddleware = require("./middlewares/errors");
 const user = require("./routes/user");
 const order = require("./routes/order");
 const product = require("./routes/product");
+const topMenu = require("./routes/topMenu");
 const app = express();
 
 bodyParser.urlencoded({ limit: "50mb", extended: true });
@@ -44,6 +45,7 @@ app.use(cors(corsOptions));
 app.use("/api/v1", user);
 app.use("/api/v1", product);
 app.use("/api/v1", order);
+app.use("/api/v1", topMenu);
 
 // Setting up cloudinary configuration
 cloudinary.config({

@@ -1,7 +1,7 @@
 /** @format */
 
 export const SiteRoute = {
-  publicRoute: ['/'],
+  publicRoute: ['/', '/product-detail/:id'],
   privateRoute: [
     '/login',
     '/dashboard',

@@ -8,7 +8,7 @@ import './desktop-main-menu.scss'
 
 const DesktopMainMenu = () => {
   return (
-    <div className="main-menu-container container-fluid">
+    <div className="main-menu-container conatiner">
       <div className="row">
         <div className="col-md-3">
           <img src={TransparentLogo} alt="aaavape logo" className="logo-image" />

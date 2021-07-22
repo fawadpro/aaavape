@@ -7,12 +7,14 @@ import * as ActionTypes from '../actions/user'
 import User from './user'
 import Order from './order'
 import Products from './products'
+import TopMenu from './topMenu'
 
 const appReducer = combineReducers({
   form: formReducer,
   User,
   Order,
   Products,
+  TopMenu,
 })
 
 export const rootReducer = (state, action) => {

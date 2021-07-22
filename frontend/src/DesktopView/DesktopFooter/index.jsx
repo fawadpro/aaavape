@@ -7,7 +7,7 @@ import './desktop-footer-style.scss'
 const DesktopFooter = () => {
   return (
     <div className="desktop-footer-container">
-      <div className="footer-menu">
+      <div className="footer-menu container">
         <div className="row">
           <div className="col-md-2">
             <div className="col-main-title">
@@ -60,7 +60,7 @@ const DesktopFooter = () => {
               <i className="fab fa-instagram"></i>
             </span>
             <span className="icon-size ml-3">
-              <i className="fab fa-youtube"></i>
+              <i className="fab fa-youtube mr-3"></i>
             </span>
             <span className="icon-size">
               <i className="fab fa-twitter"></i>

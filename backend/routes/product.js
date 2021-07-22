@@ -9,6 +9,7 @@ const {
   activateProduct,
   getSingleProduct,
   updateProduct,
+  getSinglePublicProduct,
 } = require("../controllers/productController");
 const { isUserAuthenticated, authorizeRole } = require("../middlewares/auth");
 
@@ -24,6 +25,8 @@ router
   .delete(isUserAuthenticated, authorizeRole("super_admin"), deleteProduct)
   .put(isUserAuthenticated, authorizeRole("super_admin"), activateProduct)
   .get(isUserAuthenticated, authorizeRole("super_admin"), getSingleProduct);
+
+router.route("/product/:id").get(getSinglePublicProduct);
 
 router
   .route("/admin/deleted-products")

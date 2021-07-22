@@ -72,11 +72,11 @@ const Product = ({
       {productLoader ? (
         <Loader title={activeTab === 'deleted_products' ? 'Deleted Products' : 'Products'} />
       ) : (
-        <div className="product-container">
+        <div className="product-container container">
           <div className="row">
             <div className="product-main-title ml-3 mr-4">Products</div>
 
-            <div className="col-md-4 push-to-button">
+            <div className="col-md-5 push-to-button">
               <div className="search-filter-container">
                 <div className="search-filter-pilar">
                   <span className="search-icon far fa-search"></span>
@@ -92,7 +92,7 @@ const Product = ({
                 </div>
               </div>
             </div>
-            <div className="col-md-6 text-right">
+            <div className="col-4-5 text-right">
               <Button
                 title="Add Product"
                 background={siteConfig.colors.buttonOrangeColor}

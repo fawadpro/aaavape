@@ -50,7 +50,7 @@ const Order = ({
           <div className="row">
             <div className="order-main-title ml-3 mr-4">All Orders</div>
 
-            <div className="col-md-4 push-to-button">
+            <div className="col-md-5 push-to-button">
               <div className="search-filter-container">
                 <div className="search-filter-pilar">
                   <span className="search-icon far fa-search"></span>

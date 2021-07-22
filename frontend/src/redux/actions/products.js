@@ -11,6 +11,8 @@ export const ADD_PRODUCT_LOADER = 'ADD_PRODUCT_LOADER'
 export const ADD_PRODUCT_FAILURE = 'ADD_PRODUCT_FAILURE'
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const FETCH_FILTER_PRODUCT_LOADER = 'FETCH_FILTER_PRODUCT_LOADER'
+export const FETCH_SINGLE_PRODUCT = 'FETCH_SINGLE_PRODUCT'
+export const FETCH_SINGLE_PRODUCT_FAILURE = 'FETCH_SINGLE_PRODUCT_FAILURE'
 
 export const fetchProducts = (page) => {
   var endpoint = `${config.apiPath}/api/v1/admin/products?page=` + page
@@ -116,6 +118,19 @@ export const updateProduct = (data, id) => {
       })
       .catch(function (xhr, status, err) {
         return dispatch({ type: ADD_PRODUCT_FAILURE, data: xhr })
+      })
+  }
+}
+
+export const fetchPublicSingleProduct = (id) => {
+  return (dispatch) => {
+    axios
+      .get(`${config.apiPath}/api/v1/product/${id}`)
+      .then(function (response) {
+        return dispatch({ type: FETCH_SINGLE_PRODUCT, data: response.data })
+      })
+      .catch(function (xhr, status, err) {
+        return dispatch({ type: FETCH_SINGLE_PRODUCT_FAILURE, data: xhr })
       })
   }
 }

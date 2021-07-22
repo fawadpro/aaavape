@@ -31,6 +31,11 @@ const Products = (state = initialState, action) => {
         ...state,
         fetchFilterProduct: action.data,
       }
+    case ActionTypes.FETCH_SINGLE_PRODUCT:
+      return {
+        ...state,
+        singleProduct: action.data,
+      }
     default:
       return {
         ...state,
