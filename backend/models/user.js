@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: [true, "Role is required"],
-    default: "super_admin",
   },
   avatar: {
     public_id: {

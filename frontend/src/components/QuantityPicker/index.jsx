@@ -8,9 +8,13 @@ export default class QuantityPicker extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { value: this.props.min, disableDec: true, disableInc: false }
+    this.state = { value: this.props.propsValue, disableDec: true, disableInc: false }
     this.increment = this.increment.bind(this)
     this.decrement = this.decrement.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('@@ nextProps', nextProps)
   }
 
   increment() {
@@ -43,7 +47,12 @@ export default class QuantityPicker extends Component {
   }
 
   render() {
-    const { disableDec, disableInc } = this.state
+    const { disableDec, disableInc, value } = this.state
+    const { pickerOnchange, propsValue } = this.props
+
+    console.log('@@ prosp', propsValue)
+
+    pickerOnchange(value)
 
     return (
       <span className="quantity-picker">

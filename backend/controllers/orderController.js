@@ -31,7 +31,10 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 10;
 
-  const apiFeatures = new APIFeatures(Order.find(), req.query)
+  const apiFeatures = new APIFeatures(
+    Order.find().populate("user", "name"),
+    req.query
+  )
     .search()
     .filter();
 

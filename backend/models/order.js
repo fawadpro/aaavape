@@ -43,14 +43,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: 0.0,
       },
-      product: {
+      product_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Product",
-      },
-      productVarient: {
-        type: String,
-        required: true,
       },
     },
   ],
@@ -68,17 +64,14 @@ const orderSchema = new mongoose.Schema({
   },
   itemsPrice: {
     type: Number,
-    required: true,
     default: 0.0,
   },
   taxPrice: {
     type: Number,
-    required: true,
     default: 0.0,
   },
   shippingPrice: {
     type: Number,
-    required: true,
     default: 0.0,
   },
   totalPrice: {

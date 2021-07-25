@@ -1,0 +1,37 @@
+/** @format */
+
+.credit-card-container {
+  min-height: 400px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .image-section {
+    height: 70vh;
+    position: sticky;
+    .credit-card-image {
+      height: 100%;
+      max-width: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+  .credit-card-section {
+    height: calc(100vh - 230px);
+    overflow: auto;
+
+    .main-container {
+      padding: 35px 15px 37px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 500px;
+      max-width: 100%;
+      box-sizing: border-box;
+      .payment-detail-title {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+  }
+}

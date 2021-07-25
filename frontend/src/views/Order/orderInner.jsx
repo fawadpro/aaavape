@@ -11,7 +11,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import config from '../../config'
 
 const OrderInner = ({
-  item: { orderId, createdAt, price, status, images, _id },
+  item: { orderId, createdAt, user, orderStatus, totalPrice, _id },
   activeTab,
   history,
 }) => {
@@ -53,9 +53,9 @@ const OrderInner = ({
           <EllipsisWithTooltip placement="bottom">{orderId}</EllipsisWithTooltip>
         </td>
         <td className="width-normal">{moment(createdAt).format('YYYY-MM-DD')}</td>
-        <td className="width-normal">Fawad Shah</td>
-        <td className="width-normal">Pending</td>
-        <td className="width-normal">$ 200</td>
+        <td className="width-normal">{user && user.name}</td>
+        <td className="width-normal">{orderStatus}</td>
+        <td className="width-normal">$ {totalPrice}</td>
         <td className="width-normal">
           {/* <span onClick={() => history.push(`/update-product/${_id}`)}>
             <i className="fal fa-edit" style={{ cursor: 'pointer' }}></i>

@@ -71,8 +71,10 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
           </div>
 
           <div className="col-md-2 text-right">
-            <span>Login or </span>
-            <span>Register</span>
+            <span className="cursor-pointer" onClick={() => history.push('/login')}>
+              Login
+            </span>
+            {/* <span>Register</span> */}
           </div>
         </div>
 

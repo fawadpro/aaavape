@@ -36,6 +36,11 @@ const Products = (state = initialState, action) => {
         ...state,
         singleProduct: action.data,
       }
+    case ActionTypes.FETCH_SINGLE_PRODUCT_LOADER:
+      return {
+        ...state,
+        singleProductLoader: action.data,
+      }
     default:
       return {
         ...state,

@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 // API to create new user => /api/v1/register
 exports.register = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   let user = await User.create({
     name,
@@ -12,9 +12,9 @@ exports.register = catchAsyncErrors(async (req, res, next) => {
     password,
     avatar: {
       public_id: "products/chairmount_nuubea",
-      url:
-        "https://res.cloudinary.com/bookit/image/upload/v1606231285/products/chairmount_nuubea.jpg",
+      url: "https://res.cloudinary.com/bookit/image/upload/v1606231285/products/chairmount_nuubea.jpg",
     },
+    role,
   });
 
   const token = user.getJWTToken();

@@ -7,15 +7,26 @@ import Truncate from 'react-truncate-html'
 import { withRouter } from 'react-router-dom'
 
 import { fetchPublicSingleProduct } from '../../redux/actions/products'
+import { addToCart } from '../../redux/actions/cart'
 import { siteConfig } from '../../components/Static/static'
+import AsyncLoader from '../../components/AsyncLoader'
 import Button from '../../components/Button'
 import QuantityPicker from '../../components/QuantityPicker'
 import './product-detail.scss'
 
-const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState, match }) => {
+const DesktopProductDetail = ({
+  fetchPublicSingleProductFun,
+  singleProductState,
+  match,
+  singleProductLoaderState,
+  addToCartFun,
+  addToCartProductsState,
+}) => {
   const [activeSlider, setActiveSlider] = useState()
   const [activeArrowOffset, setActiveArrowOffset] = useState({ left: '356.583px' })
   const [tabActive, setTabActive] = useState('detail')
+  const [cartItems, setCartItems] = useState([])
+  const [itemQuantity, setItemQuantity] = useState('')
 
   useEffect(() => {
     fetchPublicSingleProductFun(match.params.id)
@@ -28,17 +39,43 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
         singleProductState.product.varient &&
         singleProductState.product.varient[0]
     )
-  }, [singleProductState && singleProductState.product])
+  }, [singleProductState && singleProductState.product, cartItems])
 
   const product = singleProductState && singleProductState.product
+
+  const addProductsToCart = () => {
+    let productItem = {
+      product_id: product._id,
+      name: product.name,
+      quantity: itemQuantity,
+      price: product && product.price && product.price[0] && product.price[0].price,
+    }
+
+    addToCartFun(productItem)
+
+    setCartItems([...cartItems, productItem])
+  }
+
   const renderVarients =
     product &&
     product.varient &&
     product.varient.map((item) => ({ label: item.name, value: item.name, item }))
 
-  console.log('@@ single', product)
+  let extractedCartItem = []
 
-  return (
+  if (addToCartProductsState && addToCartProductsState.length > 0) {
+    extractedCartItem = addToCartProductsState
+    localStorage.setItem('addToCart', JSON.stringify(extractedCartItem))
+  } else {
+    let productStringify = JSON.parse(localStorage.getItem('addToCart'))
+    extractedCartItem = productStringify
+  }
+
+  console.log('@@ single', extractedCartItem)
+
+  return singleProductLoaderState ? (
+    <AsyncLoader />
+  ) : (
     <div className="product-container">
       <div className="container">
         <div className="row">
@@ -123,7 +160,12 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
                 <div className="row product-info-add-to-cart">
                   <div className="col-md-4 justify-content-center align-self-center">
                     <div className="mb-3">Quantity</div>
-                    <QuantityPicker min={1} max={4} />
+                    <QuantityPicker
+                      min={1}
+                      max={4}
+                      pickerOnchange={(value) => setItemQuantity(value)}
+                      propsValue={1}
+                    />
                   </div>
                   <div className="col-md-5 add-to-cart">
                     <Button
@@ -133,6 +175,7 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
                       type="button"
                       borderRadius={50}
                       padding={8}
+                      callBack={addProductsToCart}
                     />
                   </div>
                 </div>
@@ -181,6 +224,7 @@ const DesktopProductDetail = ({ fetchPublicSingleProductFun, singleProductState,
 export const mapDispatchToProps = (dispatch) => {
   return {
     fetchPublicSingleProductFun: (id) => dispatch(fetchPublicSingleProduct(id)),
+    addToCartFun: (data) => dispatch(addToCart(data)),
   }
 }
 
@@ -188,6 +232,8 @@ const mapStateToProps = (state) => {
   return {
     ...state,
     singleProductState: state.Products.singleProduct,
+    singleProductLoaderState: state.Products.productLoader,
+    addToCartProductsState: state.Cart,
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DesktopProductDetail))

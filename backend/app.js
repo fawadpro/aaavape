@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
 const cloudinary = require("cloudinary");
 
 const errorMiddleware = require("./middlewares/errors");
@@ -8,7 +9,10 @@ const user = require("./routes/user");
 const order = require("./routes/order");
 const product = require("./routes/product");
 const topMenu = require("./routes/topMenu");
+const payment = require("./routes/payment");
 const app = express();
+
+dotenv.config({ path: "backend/config/config.env" });
 
 bodyParser.urlencoded({ limit: "50mb", extended: true });
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -46,6 +50,7 @@ app.use("/api/v1", user);
 app.use("/api/v1", product);
 app.use("/api/v1", order);
 app.use("/api/v1", topMenu);
+app.use("/api/v1", payment);
 
 // Setting up cloudinary configuration
 cloudinary.config({
