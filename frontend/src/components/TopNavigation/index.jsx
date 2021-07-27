@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+import Cookies from 'js-cookie'
 
 import { fetchMenus } from '../../redux/actions/topMenu'
 import './top-navigation.scss'
@@ -16,13 +18,15 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
   useEffect(() => {
     fetchTopMenus()
   }, [])
+  const token = Cookies.get('aaavape_user')
+  const userDetail = token !== undefined && jwt_decode(token)
 
   console.log('@@ data', childrenArray)
 
   const data = topMenuState !== undefined ? topMenuState : {}
   let objectKeys = Object.keys(data)
 
-  console.log('@@ ata', objectKeys)
+  console.log('@@ ata', userDetail)
 
   return (
     <>
@@ -72,7 +76,14 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
 
           <div className="col-md-2 text-right">
             <span className="cursor-pointer" onClick={() => history.push('/login')}>
-              Login
+              {userDetail ? (
+                <span style={{ color: '#F7AF3A' }}>
+                  <span style={{ color: '#000' }}>Hello, </span>
+                  {userDetail && userDetail.name}
+                </span>
+              ) : (
+                'Login'
+              )}
             </span>
             {/* <span>Register</span> */}
           </div>

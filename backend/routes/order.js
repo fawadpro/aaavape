@@ -8,6 +8,7 @@ const {
   getSingleOrder,
   updateOrder,
   deleteOrder,
+  updateOrderStatus,
 } = require("../controllers/orderController");
 const { isUserAuthenticated, authorizeRole } = require("../middlewares/auth");
 
@@ -21,6 +22,10 @@ router
 router
   .route("/admin/update-order/:id")
   .put(isUserAuthenticated, authorizeRole("super_admin"), updateOrder);
+
+router
+  .route("/admin/update-order-status/:id")
+  .put(isUserAuthenticated, authorizeRole("super_admin"), updateOrderStatus);
 
 router
   .route("/admin/order/:id")

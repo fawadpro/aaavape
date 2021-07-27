@@ -4,7 +4,15 @@ import React from 'react'
 
 import './future-card.scss'
 
-const FutureProductCard = ({ image, mainTitle, subTitle, buttonText, borderColor, textColor }) => {
+const FutureProductCard = ({
+  image,
+  mainTitle,
+  subTitle,
+  buttonText,
+  borderColor,
+  textColor,
+  callBack,
+}) => {
   return (
     <div>
       <div className="product-image-container">
@@ -14,6 +22,7 @@ const FutureProductCard = ({ image, mainTitle, subTitle, buttonText, borderColor
         <div
           className="product-button-container"
           style={{ border: `2px solid ${borderColor}`, color: textColor }}
+          onClick={() => callBack()}
         >
           {buttonText}
         </div>

@@ -2,8 +2,10 @@
 
 import React from 'react'
 
+import AnimationImage from '../../images/loader-animation.gif'
+
 const AnimationLogo = () => {
-  return <div>Loading....</div>
+  return <img src={AnimationImage} />
 }
 
 export default AnimationLogo

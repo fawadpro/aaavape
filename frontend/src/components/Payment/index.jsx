@@ -8,7 +8,10 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from '@stripe/react-stripe-js'
+import jwt_decode from 'jwt-decode'
+import Cookies from 'js-cookie'
 import _ from 'lodash'
+import Swal from 'sweetalert2'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import apiConfig from '../../config'
@@ -32,8 +35,21 @@ const options = {
 
 const Payment = ({ history, addToCartProductsState }) => {
   const [extractedCartItem, setExtractedCartItem] = useState('')
+  const [orderLoader, setOrderLoader] = useState(false)
+  const [shippingAddress, setShippingAddress] = useState({
+    address: '',
+    city: 'Demo',
+    phoneNo: '',
+    postalCode: '',
+    country: '',
+  })
   const stripe = useStripe()
   const elements = useElements()
+
+  const token = Cookies.get('aaavape_user')
+  const userDetail = token !== undefined && jwt_decode(token)
+
+  console.log('@@ user', userDetail)
 
   useEffect(() => {
     if (addToCartProductsState && addToCartProductsState.length > 0) {
@@ -48,32 +64,33 @@ const Payment = ({ history, addToCartProductsState }) => {
 
   console.log('@@ extractedCartItem', extractedCartItem)
 
-  const paymentData = {
-    amount: Math.round(300),
-  }
-
   let total_amount = _.sumBy(extractedCartItem, function (item) {
     return item.quantity * item.price
   })
+
+  const paymentData = {
+    amount: Math.round(total_amount * 100),
+  }
 
   let createOrder = {
     totalPrice: total_amount,
     orderItems: extractedCartItem,
     shippingInfo: {
-      address: 'F-10',
-      city: 'Islamabad',
-      phoneNo: 48398489,
-      postalCode: 99999,
-      country: 'Pakistan',
+      address: shippingAddress.address,
+      city: shippingAddress.city,
+      phoneNo: shippingAddress.phoneNo,
+      postalCode: shippingAddress.postalCode,
+      country: shippingAddress.country,
     },
     paymentInfo: {
       id: '',
       status: '',
     },
-    user: '60fc59980d91bc13e0e2fce4',
+    user: userDetail && userDetail.id,
   }
 
   const submitHandler = async () => {
+    setOrderLoader(true)
     let res
     try {
       const config = {
@@ -96,41 +113,35 @@ const Payment = ({ history, addToCartProductsState }) => {
         payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
-            name: 'FAwad',
-            email: 'fawadshah@gmail.com',
+            name: userDetail && userDetail.name,
+            email: userDetail && userDetail.email,
           },
         },
       })
 
       if (result.error) {
-        console.log('@@@ error')
+        Swal.fire('Error !', 'Something went wrong', 'error')
       } else {
-        // The payment is processed or not
         if (result.paymentIntent.status === 'succeeded') {
           createOrder.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           }
 
-          axios
-            .post(`${apiConfig.apiPath}/api/v1/new-order`, createOrder)
-            .then((res) => alert('Order has been placed'))
-
-          setTimeout(() => {
-            history.push('/')
-          }, 500)
-
-          // dispatch(createOrder(order))
-
-          // history.push('/')
+          axios.post(`${apiConfig.apiPath}/api/v1/new-order`, createOrder).then((res) => {
+            Swal.fire('Success !', 'Order has been placed successfully', 'success')
+            localStorage.removeItem('addToCart')
+            setOrderLoader(false)
+            setTimeout(() => {
+              history.push('/')
+            }, 1000)
+          })
         } else {
-          console.log('@@ Eeror')
-          // alert.error('There is some issue while payment processing')
+          Swal.fire('Error !', 'There is some issue while payment processing', 'error')
         }
       }
     } catch (error) {
-      // document.querySelector('#pay_btn').disabled = false;
-      // alert.error(error.response.data.message)
+      Swal.fire('Error !', 'There is some issue while payment processing', 'error')
     }
   }
   return (
@@ -161,17 +172,34 @@ const Payment = ({ history, addToCartProductsState }) => {
 
           <div className="form-field mt-4 mb-3">
             <div className="field-title mb-2">Address</div>
-            <input type="text" className="form-control" placeholder="Address" />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Address"
+              onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
+            />
           </div>
 
           <div className="form-field mt-4 mb-3">
             <div className="field-title mb-2">Phone No</div>
-            <input type="text" className="form-control" placeholder="Address" />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Phone No"
+              onChange={(e) => setShippingAddress({ ...shippingAddress, phoneNo: e.target.value })}
+            />
           </div>
 
           <div className="form-field mt-4 mb-3">
             <div className="field-title mb-2">Postal Code</div>
-            <input type="text" className="form-control" placeholder="Address" />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Postal Code"
+              onChange={(e) =>
+                setShippingAddress({ ...shippingAddress, postalCode: e.target.value })
+              }
+            />
           </div>
           <div className="form-field mt-4 mb-3">
             <div className="field-title mb-2">Country</div>
@@ -180,6 +208,7 @@ const Payment = ({ history, addToCartProductsState }) => {
                 { label: 'China', value: 'china' },
                 { label: 'US', value: 'us' },
               ]}
+              onChange={(value) => setShippingAddress({ ...shippingAddress, country: value.label })}
               placeholder="Select Country"
             />
           </div>
@@ -192,6 +221,7 @@ const Payment = ({ history, addToCartProductsState }) => {
               borderRadius={50}
               padding={8}
               callBack={() => submitHandler()}
+              loader={orderLoader}
             />
           </div>
         </div>

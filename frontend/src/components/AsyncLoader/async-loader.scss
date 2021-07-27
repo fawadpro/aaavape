@@ -1,8 +1,14 @@
+/** @format */
+
 .async-loader-container {
-    height:100vh;
-    width:100vw;
-    display:flex;
-    flex-direction: row;
-    justify-content:center;
-    align-items:center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+  .animation-loader-image {
+    width: 150px;
+    height: 100px;
+  }
 }

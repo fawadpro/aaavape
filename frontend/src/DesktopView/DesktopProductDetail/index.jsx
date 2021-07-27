@@ -26,10 +26,14 @@ const DesktopProductDetail = ({
   const [activeArrowOffset, setActiveArrowOffset] = useState({ left: '356.583px' })
   const [tabActive, setTabActive] = useState('detail')
   const [cartItems, setCartItems] = useState([])
-  const [itemQuantity, setItemQuantity] = useState('')
+  const [itemQuantity, setItemQuantity] = useState(1)
+  const [detectWholeSalePrice, setDetectWholeSalePrice] = useState(false)
+  const [cartLoader, setCartLoader] = useState(false)
+  const [wholeSaleIndex, setWholeIndex] = useState('')
 
   useEffect(() => {
     fetchPublicSingleProductFun(match.params.id)
+    window.scrollTo(0, 0)
   }, [])
 
   useMemo(() => {
@@ -44,14 +48,22 @@ const DesktopProductDetail = ({
   const product = singleProductState && singleProductState.product
 
   const addProductsToCart = () => {
+    setCartLoader(true)
     let productItem = {
       product_id: product._id,
       name: product.name,
       quantity: itemQuantity,
-      price: product && product.price && product.price[0] && product.price[0].price,
+      price: detectWholeSalePrice
+        ? product && product.price
+        : product && product.price && product.price[0] && product.price[0].price,
     }
 
     addToCartFun(productItem)
+
+    setTimeout(() => {
+      window.scrollTo(0, 0)
+      setCartLoader(false)
+    }, 500)
 
     setCartItems([...cartItems, productItem])
   }
@@ -71,7 +83,7 @@ const DesktopProductDetail = ({
     extractedCartItem = productStringify
   }
 
-  console.log('@@ single', extractedCartItem)
+  console.log('@@ single', product)
 
   return singleProductLoaderState ? (
     <AsyncLoader />
@@ -156,28 +168,61 @@ const DesktopProductDetail = ({
                 </div>
               )}
 
-              <div className="container">
-                <div className="row product-info-add-to-cart">
-                  <div className="col-md-4 justify-content-center align-self-center">
-                    <div className="mb-3">Quantity</div>
-                    <QuantityPicker
-                      min={1}
-                      max={4}
-                      pickerOnchange={(value) => setItemQuantity(value)}
-                      propsValue={1}
-                    />
+              <div className="product-whole-sale">
+                <div className="product-table-header">
+                  <div className="row">
+                    <div className="col-md-5 ml-4">QUANTITY</div>
+                    <div className="col-md-6 text-right ml-3">PRICE (WHOLESALE DISCOUNT)</div>
                   </div>
-                  <div className="col-md-5 add-to-cart">
-                    <Button
-                      title="Add To Cart"
-                      background={siteConfig.colors.buttonOrangeColor}
-                      hoverBackground={siteConfig.colors.buttonOrangeColorHover}
-                      type="button"
-                      borderRadius={50}
-                      padding={8}
-                      callBack={addProductsToCart}
-                    />
-                  </div>
+                </div>
+                <div>
+                  {siteConfig.wholeSaleData.map((item, index) => (
+                    <div
+                      style={{
+                        background: wholeSaleIndex === item.label ? '#F7AF3A' : null,
+                        color: wholeSaleIndex === item.label ? '#fff' : null,
+                      }}
+                      className="row product-wholesale-item"
+                      onClick={() => {
+                        setDetectWholeSalePrice(true)
+                        setWholeIndex(item.label)
+                        product['price'] = item.price
+                        setItemQuantity(item.value)
+                      }}
+                    >
+                      <div
+                        className="col-md-6 product-wholesale-label"
+                        style={{ color: wholeSaleIndex === item.label ? '#fff' : null }}
+                      >
+                        {item.label}
+                      </div>
+                      <div className="col-md-6 text-right">${item.price}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="row product-info-add-to-cart mb-4">
+                <div className="col-md-4 justify-content-center align-self-center">
+                  <div className="mb-3 font-weight-bold">Quantity</div>
+                  <QuantityPicker
+                    min={1}
+                    max={6000}
+                    pickerOnchange={(value) => setItemQuantity(value)}
+                    propsValue={itemQuantity}
+                  />
+                </div>
+                <div className="col-md-5 add-to-cart">
+                  <Button
+                    title="Add To Cart"
+                    background={siteConfig.colors.buttonOrangeColor}
+                    hoverBackground={siteConfig.colors.buttonOrangeColorHover}
+                    type="button"
+                    borderRadius={50}
+                    padding={8}
+                    callBack={addProductsToCart}
+                    loader={cartLoader}
+                  />
                 </div>
               </div>
             </div>

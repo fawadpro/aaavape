@@ -24,12 +24,12 @@ import Order from './views/Order'
 import Product from './views/Product'
 import ProductForm from './components/Forms/ProductForm'
 import PendingOrders from './views/PendingOrders'
-import Home from './views/Home'
 import MainNav from './components/MainNav'
 import MobileMainNav from './components/MobileMainNav'
 import DesktopCart from './DesktopView/DesktopCart'
 import Payment from './components/Payment'
-const Login = lazy(() => import('./views/Login'))
+import Login from './views/Login/index'
+const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
 class App extends Component {

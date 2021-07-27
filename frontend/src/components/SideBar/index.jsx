@@ -104,7 +104,7 @@ const SideBar = ({ children, location, history }) => {
       {pathname === '/' || pathname === '/login' ? null : (
         <div className="side-bar-container" onClick={() => showDropdown && setShowDropdown(false)}>
           <div className="top-menu-container">
-            <div className="logo-container">
+            <div className="logo-container" onClick={() => history.push('/')}>
               <img src={Logo} alt="website logo" className="logo" />
             </div>
             <div className="input-container">

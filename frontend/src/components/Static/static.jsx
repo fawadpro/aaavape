@@ -22,9 +22,16 @@ export const siteConfig = {
     { name: 'Order ID', width: 'Medium' },
     { name: 'Date', width: 'medium' },
     { name: 'Customer', width: 'Medium' },
-    { name: 'Payment Status', width: 'medium' },
+    { name: 'Order Status', width: 'medium' },
     { name: 'Price', width: 'medium' },
+    { name: 'Products', width: 'medium' },
     { name: 'Actions', width: 'medium' },
+  ],
+  wholeSaleData: [
+    { label: '100-300', value: 100, price: 12.8 },
+    { label: '301-500', value: 301, price: 11.5 },
+    { label: '501-1000', value: 501, price: 10.6 },
+    { label: '1001-2000', value: 1001, price: 9.9 },
   ],
   dummyImages: [
     'https://cdn.shopify.com/s/files/1/0505/5014/5221/products/cub40-Abstract_1024x1024@2x.jpg?v=1608468973',

@@ -95,6 +95,29 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Update / Process order - ADMIN  =>   /api/v1/admin/order/:id
+exports.updateOrderStatus = catchAsyncErrors(async (req, res, next) => {
+  let order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  if (order.orderStatus === "Delivered") {
+    return next(new ErrorHandler("You have already delivered this order", 400));
+  }
+
+  order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({
+    success: true,
+    order,
+  });
+});
+
 async function updateStock(id, quantity, productVarient) {
   const product = await Product.findById(id);
 

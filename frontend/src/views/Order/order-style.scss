@@ -86,6 +86,19 @@ $orange_color: #f7af3a;
         }
       }
 
+      .view-products-button {
+        background: #f7af3a;
+        color: #fff;
+        border-radius: 5px;
+        border: 1px solid #f7af3a;
+        margin-top: 3px;
+        line-height: 25px;
+        font-size: 14px;
+        &:focus {
+          outline: none;
+        }
+      }
+
       .active-button {
         border: 1px solid #f7af3a;
         background: #fff;
@@ -127,4 +140,15 @@ $orange_color: #f7af3a;
       margin-bottom: 10px;
     }
   }
+}
+
+// Global
+.products-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c7bbd;
+}
+
+.product-cart-price {
+  font-weight: bold;
 }
