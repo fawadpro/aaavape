@@ -23,6 +23,7 @@
     "dev": "NODE_ENV=development nodemon backend/server",
     "prod": "NODE_ENV=production nodemon backend/server"
   },
+
   "author": "",
   "license": "ISC"
 }

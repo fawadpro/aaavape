@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cloudinary = require("cloudinary");
+const path = require("path");
 
 const errorMiddleware = require("./middlewares/errors");
 const user = require("./routes/user");
@@ -59,7 +60,7 @@ cloudinary.config({
   api_secret: "Cf5MiD06T7-vzG1nTBx65NiePwE",
 });
 
-if (process.env.NODE_ENV === "PRODUCTION") {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   app.get("*", (req, res) => {
