@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV || 'development'
 
 const config = {
   development: {
-    apiPath: 'http://localhost:5000',
+    apiPath: 'https://aaavape.herokuapp.com',
     domain: 'aaavape.com',
     revivePath: 'https://aaavape.com',
     lockScreen: true,
