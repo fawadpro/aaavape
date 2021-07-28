@@ -12,7 +12,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import config from './config'
 
 import { SiteRoute } from './utils/siteRoute'
-import AnimationLogo from './components/AnimationLogo'
+import AsyncLoader from './components/AsyncLoader'
 import PrivateRoute from './components/Auth/privateRoute'
 import 'font-awesome/css/font-awesome.min.css'
 import './App.scss'
@@ -71,7 +71,7 @@ class App extends Component {
         <Suspense
           fallback={
             <div className="loader-parent">
-              <AnimationLogo />
+              <AsyncLoader />
             </div>
           }
         >
