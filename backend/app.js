@@ -67,7 +67,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   app.get("*", function (req, res) {
-    const index = path.join(__dirname, "build", "index.html");
+    const index = path.join(__dirname, "../frontend/build/index.html");
     res.sendFile(index);
   });
 }
