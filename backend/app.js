@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const cloudinary = require("cloudinary");
 const path = require("path");
 
@@ -13,7 +12,8 @@ const topMenu = require("./routes/topMenu");
 const payment = require("./routes/payment");
 const app = express();
 
-dotenv.config({ path: "backend/config/config.env" });
+if (process.env.NODE_ENV !== "production")
+  require("dotenv").config({ path: "backend/config/config.env" });
 
 bodyParser.urlencoded({ limit: "50mb", extended: true });
 app.use(bodyParser.json({ limit: "50mb" }));
