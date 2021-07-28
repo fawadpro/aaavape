@@ -18,8 +18,6 @@ if (process.env.NODE_ENV !== "production")
 bodyParser.urlencoded({ limit: "50mb", extended: true });
 app.use(bodyParser.json({ limit: "50mb" }));
 
-console.log("@@@ data", process.env.CLOUDINARY_API_SECRET);
-
 const whitelist = ["http://localhost:3000", "http://localhost:3001"];
 
 const corsOptions = {
@@ -63,8 +61,9 @@ cloudinary.config({
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+  app.get("*", function (req, res) {
+    const index = path.join(__dirname, "build", "index.html");
+    res.sendFile(index);
   });
 }
 
