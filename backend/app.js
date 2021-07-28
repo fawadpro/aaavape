@@ -59,6 +59,14 @@ cloudinary.config({
   api_secret: "Cf5MiD06T7-vzG1nTBx65NiePwE",
 });
 
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+  });
+}
+
 // Error middlewares
 app.use(errorMiddleware);
 
