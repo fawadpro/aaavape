@@ -10,7 +10,7 @@ const config = {
     lockScreen: true,
   },
   production: {
-    apiPath: 'http://localhost:5000',
+    apiPath: 'https://aaavape.herokuapp.com',
     domain: 'aaavape.com',
     revivePath: 'https://aaavape.com',
     lockScreen: true,
