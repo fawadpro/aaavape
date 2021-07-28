@@ -18,7 +18,12 @@ if (process.env.NODE_ENV !== "production")
 bodyParser.urlencoded({ limit: "50mb", extended: true });
 app.use(bodyParser.json({ limit: "50mb" }));
 
-const whitelist = ["http://localhost:3000", "http://localhost:3001"];
+const whitelist = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://aaavape.herokuapp.com",
+  "http://aaavape.herokuapp.com",
+];
 
 const corsOptions = {
   origin(origin, callback) {
