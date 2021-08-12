@@ -49,8 +49,6 @@ const Payment = ({ history, addToCartProductsState }) => {
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
-  console.log('@@ user', userDetail)
-
   useEffect(() => {
     if (addToCartProductsState && addToCartProductsState.length > 0) {
       let extractedCartItemLocal = addToCartProductsState
