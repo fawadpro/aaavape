@@ -10,5 +10,6 @@ export const SiteRoute = {
     '/pending-orders',
     '/order',
     '/product',
+    '/register',
   ],
 }

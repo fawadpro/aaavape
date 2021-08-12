@@ -42,9 +42,15 @@ const DesktopMainMenu = ({ history, addToCartProductsState }) => {
               <i className="fas fa-headset mr-2"></i>
               <span className="store">Support</span>
               <i
+                className="fas fa-user-circle cursor-pointer ml-4 font-size-20 "
+                onClick={() => history.push('/login')}
+              ></i>
+
+              <i
                 className="fas fa-shopping-cart cursor-pointer ml-4"
                 onClick={() => history.push('/cart')}
               ></i>
+
               {extractedCartItem && extractedCartItem.length > 0 && (
                 <span className="icon-container">
                   <div className="cart-icon-back">

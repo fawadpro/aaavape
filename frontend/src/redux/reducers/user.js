@@ -21,6 +21,21 @@ const User = (state = initialState, action) => {
         ...state,
         userLogin: { status: 'fail' },
       }
+    case ActionTypes.USER_REGISTER_FAILURE:
+      return {
+        ...state,
+        userRegisterFailure: { status: 'fail' },
+      }
+    case ActionTypes.USER_REGISTER:
+      return {
+        ...state,
+        userRegister: action.data,
+      }
+    case ActionTypes.USER_REGISTER_LOADER:
+      return {
+        ...state,
+        userRegisterLoader: action.data,
+      }
     default:
       return {
         ...state,

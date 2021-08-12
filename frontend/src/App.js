@@ -29,6 +29,7 @@ import MobileMainNav from './components/MobileMainNav'
 import DesktopCart from './DesktopView/DesktopCart'
 import Payment from './components/Payment'
 import Login from './views/Login/index'
+import Register from './views/Register'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
@@ -81,25 +82,29 @@ class App extends Component {
                 <Route exact path="/" render={(props) => <Home {...props} />} />
               </MobileMainNav>
             ) : (
-              <MainNav>
-                <Route exact path="/" render={(props) => <Home {...props} />} />
-                <Route
-                  exact
-                  path="/product-detail/:id"
-                  render={(props) => <DesktopProductDetail {...props} />}
-                />
-                <Route exact path="/cart" render={(props) => <DesktopCart {...props} />} />
-                {stripeApiKey && (
-                  <Elements stripe={loadStripe(stripeApiKey)}>
-                    <Route exact path="/payment" render={(props) => <Payment {...props} />} />
-                  </Elements>
-                )}
-              </MainNav>
+              <>
+                <MainNav>
+                  <Route exact path="/" render={(props) => <Home {...props} />} />
+
+                  <Route
+                    exact
+                    path="/product-detail/:id"
+                    render={(props) => <DesktopProductDetail {...props} />}
+                  />
+                  <Route exact path="/cart" render={(props) => <DesktopCart {...props} />} />
+                  {stripeApiKey && (
+                    <Elements stripe={loadStripe(stripeApiKey)}>
+                      <Route exact path="/payment" render={(props) => <Payment {...props} />} />
+                    </Elements>
+                  )}
+                </MainNav>
+              </>
             )}
           </Route>
 
           <Route path={[SiteRoute.privateRoute]}>
             <Route exact path="/login" render={(props) => <Login {...props} />} />
+            <Route path="/register" render={(props) => <Register {...props} />} />
             <SideBar>
               <PrivateRoute
                 exact

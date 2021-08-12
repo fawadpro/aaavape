@@ -23,7 +23,6 @@ const SideBar = ({ children, location, history }) => {
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
-  console.log('@@@ login', history)
   useMemo(() => {
     if (userDetail === false && pathname !== '/login') {
       history.push('/')
@@ -101,7 +100,7 @@ const SideBar = ({ children, location, history }) => {
 
   return (
     <>
-      {pathname === '/' || pathname === '/login' ? null : (
+      {pathname === '/' || pathname === '/login' || pathname === '/register' ? null : (
         <div className="side-bar-container" onClick={() => showDropdown && setShowDropdown(false)}>
           <div className="top-menu-container">
             <div className="logo-container" onClick={() => history.push('/')}>

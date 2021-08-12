@@ -6,20 +6,37 @@ import { ToastContainer, toast } from 'react-toastify'
 import { withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { UserLogin } from '../../redux/actions/user'
-import LoginInner from './loginInner'
+import { UserRegister } from '../../redux/actions/user'
+import RegisterInnner from './registerInner'
 import LoginHero from '../../images/login-hero.png'
 import LoginLogo from '../../images/logo.png'
-import './loginInner'
 import 'react-toastify/dist/ReactToastify.min.css'
-import './login-style.scss'
+import './register-style.scss'
 
-const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
+const Register = ({
+  userRegisterFun,
+  userRegisterLoader,
+  userRegisterState,
+  history,
+  userRegisterFailureState,
+}) => {
   useMemo(() => {
-    if (userLoginState && userLoginState.success) {
-      Cookies.set('aaavape_user', userLoginState && userLoginState.token)
-    } else if (userLoginState && userLoginState.status === 'fail') {
-      toast.error('Email or password is incorrect', {
+    if (userRegisterState && userRegisterState.success) {
+      toast.success('User Has been Registered Successfully', {
+        toastId: 'loginError',
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
+
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 1200)
+    } else if (userRegisterFailureState && userRegisterFailureState.status === 'fail') {
+      toast.error('Email address must be unique', {
         toastId: 'loginError',
         position: 'bottom-right',
         autoClose: 5000,
@@ -29,18 +46,19 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
         draggable: true,
       })
     }
-  }, [userLoginState])
+  }, [userRegisterState, userRegisterFailureState])
 
   useEffect(() => {
     const user = Cookies.get('aaavape_user')
     if (user === undefined) {
-      history.push('/login')
+      history.push('/register')
     } else {
       history.push('/dashboard')
     }
   }, [])
-  const loginCompanyUser = (value) => {
-    userLoginFunc(value)
+
+  const userRegisterLocal = (value) => {
+    userRegisterFun(value)
   }
 
   return (
@@ -53,9 +71,9 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
           onClick={() => history.push('/')}
         />
         <div className="form-area">
-          <div className="form-title">Log In</div>
+          <div className="form-title">Register</div>
           <div className="form-sub-title">Continue to AAAVAPE Official Website</div>
-          <LoginInner onSubmit={loginCompanyUser} userLoginLoader={userLoginLoader} />
+          <RegisterInnner onSubmit={userRegisterLocal} userRegisterLoader={userRegisterLoader} />
         </div>
         <ToastContainer
           position="bottom-right"
@@ -70,7 +88,7 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
         />
       </div>
       <div>
-        <img src={LoginHero} alt="login hero" className="login-page-right-container-image " />
+        <img src={LoginHero} alt="login hero" className="login-page-right-container-image" />
       </div>
     </div>
   )
@@ -78,16 +96,17 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    userLoginFunc: (data) => dispatch(UserLogin(data)),
+    userRegisterFun: (data) => dispatch(UserRegister(data)),
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     ...state,
-    userLoginLoader: state.User.userLoginLoader,
-    userLoginState: state.User.userLogin,
+    userRegisterLoader: state.User.userRegisterLoader,
+    userRegisterState: state.User.userRegister,
+    userRegisterFailureState: state.User.userRegisterFailure,
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register))

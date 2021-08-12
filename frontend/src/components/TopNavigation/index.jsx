@@ -85,7 +85,14 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
                 'Login'
               )}
             </span>
-            {/* <span>Register</span> */}
+            {userDetail ? null : (
+              <>
+                <span className="mr-2 ml-2">or</span>
+                <span className="cursor-pointer" onClick={() => history.push('/register')}>
+                  Register
+                </span>
+              </>
+            )}
           </div>
         </div>
 

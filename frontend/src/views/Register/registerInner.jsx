@@ -7,10 +7,20 @@ import Loader from 'react-loader-spinner'
 
 import { renderFieldWithIcon, required } from '../../components/ReduxForm'
 
-const LoginInner = ({ handleSubmit, userLoginLoader, history }) => {
+const RegisterInner = ({ handleSubmit, userRegisterLoader, history }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="login-inner-container">
+        <div className="field-space-between">
+          <Field
+            name="name"
+            type="text"
+            component={renderFieldWithIcon}
+            label="Name"
+            icon="fas fa-user-circle"
+            validate={[required]}
+          />
+        </div>
         <div className="field-space-between">
           <Field
             name="email"
@@ -35,19 +45,19 @@ const LoginInner = ({ handleSubmit, userLoginLoader, history }) => {
 
         <div className="mb-4">
           <button type="submit" className="login-button">
-            {userLoginLoader ? (
+            {userRegisterLoader ? (
               <Loader type="ThreeDots" color="#ffffff" height="10" width="100" />
             ) : (
-              'Log In'
+              'Register'
             )}
           </button>
         </div>
 
         <div className="field-space-between text-center">
           <span className="creation-placeholder">
-            Don't have an account?{' '}
-            <span className="placeholder-heighlight" onClick={() => history.push('/register')}>
-              Sign Up
+            Already have an account?{' '}
+            <span className="placeholder-heighlight" onClick={() => history.push('/login')}>
+              Login
             </span>
           </span>
         </div>
@@ -64,6 +74,6 @@ const LoginInner = ({ handleSubmit, userLoginLoader, history }) => {
 
 export default withRouter(
   reduxForm({
-    form: 'loginForm',
-  })(LoginInner)
+    form: 'registerInner',
+  })(RegisterInner)
 )
