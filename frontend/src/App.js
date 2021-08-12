@@ -65,8 +65,6 @@ class App extends Component {
       )
     }
 
-    console.log('@@ userDetail', stripeApiKey)
-
     return (
       <Switch>
         <Suspense
