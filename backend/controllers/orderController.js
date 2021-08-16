@@ -8,7 +8,6 @@ const APIFeatures = require("../utils/apiFeatures");
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   let totalOrders = await Order.find();
   let ordersLength = totalOrders.length;
-  console.log("@@ order", ordersLength);
   const order = await Order.create({
     ...req.body,
     orderId: ordersLength + 1,

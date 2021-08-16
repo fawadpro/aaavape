@@ -25,7 +25,7 @@ export const UserLogin = (data) => {
       })
       .catch(function (error) {
         dispatch({ type: USER_LOGIN_LOADER, data: false })
-        return dispatch({ type: USER_LOGIN_FAILURE, error: error.response.data })
+        return dispatch({ type: USER_LOGIN_FAILURE, error: error.response.data.message })
       })
   }
 }

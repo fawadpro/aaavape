@@ -19,7 +19,7 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
     if (userLoginState && userLoginState.success) {
       Cookies.set('aaavape_user', userLoginState && userLoginState.token)
     } else if (userLoginState && userLoginState.status === 'fail') {
-      toast.error('Email or password is incorrect', {
+      toast.error(userLoginState && userLoginState.message, {
         toastId: 'loginError',
         position: 'bottom-right',
         autoClose: 5000,

@@ -19,7 +19,7 @@ const User = (state = initialState, action) => {
     case ActionTypes.USER_LOGIN_FAILURE:
       return {
         ...state,
-        userLogin: { status: 'fail' },
+        userLogin: { status: 'fail', message: action.error },
       }
     case ActionTypes.USER_REGISTER_FAILURE:
       return {

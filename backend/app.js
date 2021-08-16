@@ -1,12 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary");
 const path = require("path");
 
 const errorMiddleware = require("./middlewares/errors");
 const user = require("./routes/user");
 const order = require("./routes/order");
+const User = require("./models/user");
 const product = require("./routes/product");
 const topMenu = require("./routes/topMenu");
 const payment = require("./routes/payment");
@@ -48,6 +50,19 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Route to confirm user account
+app.get("/confirmation/:token", async (req, res) => {
+  try {
+    const {
+      user: { id },
+    } = jwt.verify(req.params.token, process.env.EMAIL_SECRET);
+    await User.update({ _id: id }, { $set: { isVerified: true } });
+    return res.redirect("http://localhost:3000/email-success");
+  } catch (e) {
+    res.send("error");
+  }
+});
 
 // Route middlewares
 app.use("/api/v1", user);

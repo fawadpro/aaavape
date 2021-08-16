@@ -29,6 +29,7 @@ import MobileMainNav from './components/MobileMainNav'
 import DesktopCart from './DesktopView/DesktopCart'
 import Payment from './components/Payment'
 import Login from './views/Login/index'
+import EmailSuccess from './views/EmailSuccess'
 import Register from './views/Register'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
@@ -83,6 +84,7 @@ class App extends Component {
               <>
                 <MainNav>
                   <Route exact path="/" render={(props) => <Home {...props} />} />
+                  <Route path="/email-success" render={(props) => <EmailSuccess {...props} />} />
 
                   <Route
                     exact
@@ -103,6 +105,7 @@ class App extends Component {
           <Route path={[SiteRoute.privateRoute]}>
             <Route exact path="/login" render={(props) => <Login {...props} />} />
             <Route path="/register" render={(props) => <Register {...props} />} />
+
             <SideBar>
               <PrivateRoute
                 exact

@@ -1,5 +1,8 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const _ = require("lodash");
+const jwt = require("jsonwebtoken");
+const { sendConfirmationEmail } = require("../services/emailService");
 const User = require("../models/user");
 
 // API to create new user => /api/v1/register
@@ -19,6 +22,18 @@ exports.register = catchAsyncErrors(async (req, res, next) => {
 
   const token = user.getJWTToken();
 
+  const emailToken = jwt.sign(
+    {
+      user: _.pick(user, "id"),
+    },
+    process.env.EMAIL_SECRET,
+    {
+      expiresIn: "1d",
+    }
+  );
+
+  sendConfirmationEmail(user, emailToken, req.host);
+
   res.status(201).json({
     success: true,
     message: "User has been created successfully",
@@ -36,6 +51,8 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
 
   let user = await User.findOne({ email }).select("+password");
 
+  console.log("@@@ user", user);
+
   if (!user) {
     return next(new ErrorHandler("Email is not found", 404));
   }
@@ -44,6 +61,15 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
 
   if (!isPasswordMatch) {
     return next(new ErrorHandler("Email or Password is incorrect", 404));
+  }
+
+  if (!user.isVerified) {
+    return next(
+      new ErrorHandler(
+        "Please take a comment and validate your email to confirm your account ",
+        404
+      )
+    );
   }
 
   let token = user.getSignInToken();
