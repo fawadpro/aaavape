@@ -58,7 +58,11 @@ app.get("/confirmation/:token", async (req, res) => {
       user: { id },
     } = jwt.verify(req.params.token, process.env.EMAIL_SECRET);
     await User.update({ _id: id }, { $set: { isVerified: true } });
-    return res.redirect("http://localhost:3000/email-success");
+    if (process.env.NODE_ENV !== "production") {
+      return res.redirect("http://localhost:3000/email-success");
+    } else {
+      return res.redirect(`${req.host}/email-successfully`);
+    }
   } catch (e) {
     res.send("error");
   }
