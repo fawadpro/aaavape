@@ -22,7 +22,7 @@ const Register = ({
 }) => {
   useMemo(() => {
     if (userRegisterState && userRegisterState.success) {
-      toast.success('User Has been Registered Successfully', {
+      toast.success('User has been Registered Successfully, please verify your email address', {
         toastId: 'loginError',
         position: 'bottom-right',
         autoClose: 5000,

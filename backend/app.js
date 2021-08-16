@@ -61,7 +61,7 @@ app.get("/confirmation/:token", async (req, res) => {
     if (process.env.NODE_ENV !== "production") {
       return res.redirect("http://localhost:3000/email-success");
     } else {
-      return res.redirect(`${req.host}/email-successfully`);
+      return res.redirect(`/email-success`);
     }
   } catch (e) {
     res.send("error");
