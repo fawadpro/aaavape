@@ -12,7 +12,13 @@ const transport = nodemailer.createTransport(
 );
 
 const sendConfirmationEmail = (user, token, url) => {
-  let localUrl = `http://${url}:5000/confirmation/${token}`;
+  let localUrl;
+  if (process.env.NODE_ENV !== "production") {
+    localUrl = `http://${url}:5000/confirmation/${token}`;
+  } else {
+    localUrl = `http://${url}/confirmation/${token}`;
+  }
+
   transport
     .sendMail({
       from: `AAAVape | Email Confirmation <fawad@aaavape.com>`,
