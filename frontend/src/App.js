@@ -30,6 +30,8 @@ import DesktopCart from './DesktopView/DesktopCart'
 import Payment from './components/Payment'
 import Login from './views/Login/index'
 import EmailSuccess from './views/EmailSuccess'
+import ForgotPassword from './DesktopView/DesktopResetPassword'
+import NewPassword from './DesktopView/DesktopNewPassword'
 import Register from './views/Register'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
@@ -85,7 +87,14 @@ class App extends Component {
                 <MainNav>
                   <Route exact path="/" render={(props) => <Home {...props} />} />
                   <Route path="/email-success" render={(props) => <EmailSuccess {...props} />} />
-
+                  <Route
+                    path="/forgot-password"
+                    render={(props) => <ForgotPassword {...props} />}
+                  />
+                  <Route
+                    path="/password/reset/:token"
+                    render={(props) => <NewPassword {...props} />}
+                  />
                   <Route
                     exact
                     path="/product-detail/:id"

@@ -40,7 +40,7 @@ const LoginInner = ({ handleSubmit, userLoginLoader, history }) => {
             ) : (
               'Log In'
             )}
-          </button>
+          </button>{' '}
         </div>
 
         <div className="field-space-between text-center">
@@ -49,6 +49,12 @@ const LoginInner = ({ handleSubmit, userLoginLoader, history }) => {
             <span className="placeholder-heighlight" onClick={() => history.push('/register')}>
               Sign Up
             </span>
+          </span>
+        </div>
+
+        <div className="field-space-between text-center">
+          <span className="placeholder-heighlight" onClick={() => history.push('/forgot-password')}>
+            Forgot Password ?
           </span>
         </div>
 
