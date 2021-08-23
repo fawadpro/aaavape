@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
 
+import { userRedirect } from '../../utils/user_redirect'
 import { UserLogin } from '../../redux/actions/user'
 import LoginInner from './loginInner'
 import LoginHero from '../../images/login-hero.png'
@@ -17,6 +19,8 @@ import './login-style.scss'
 const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
   useMemo(() => {
     if (userLoginState && userLoginState.success) {
+      let userDetail = jwt_decode(userLoginState && userLoginState.token)
+      userRedirect(userDetail.role)
       Cookies.set('aaavape_user', userLoginState && userLoginState.token)
     } else if (userLoginState && userLoginState.status === 'fail') {
       toast.error(userLoginState && userLoginState.message, {
@@ -36,7 +40,7 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
     if (user === undefined) {
       history.push('/login')
     } else {
-      history.push('/dashboard')
+      return userRedirect(user && user.role, history)
     }
   }, [])
   const loginCompanyUser = (value) => {

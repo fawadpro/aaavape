@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 import _ from 'lodash'
 import axios from 'axios'
 
+import UnlockAccess from '../../components/_unlockComponent'
 import { menus } from './_nav_menu'
 import Avatar from '../../images/avatar.png'
 import Logo from '../../images/transparent-logo.png'
@@ -153,63 +154,69 @@ const SideBar = ({ children, location, history }) => {
                 <div className="menu-overflow">
                   {menus.map((item, index) => (
                     <>
-                      <div
-                        className={
-                          item.url === active && item && item.children && item.children.length
-                            ? 'active-child-tab-container'
-                            : item.url === active
-                            ? 'active-tab-container'
-                            : 'content-container'
-                        }
+                      <UnlockAccess
+                        currentUser={userDetail.role || null}
+                        roles={item.roles}
                         key={index}
                       >
                         <div
-                          className="menu-grid"
-                          onClick={() => {
-                            history.push(item.url)
-                            item && item.children && item.children.length
-                              ? childToggle(item.url)
-                              : toggle(item.url)
-                          }}
+                          className={
+                            item.url === active && item && item.children && item.children.length
+                              ? 'active-child-tab-container'
+                              : item.url === active
+                              ? 'active-tab-container'
+                              : 'content-container'
+                          }
+                          key={index}
                         >
-                          <div className="icon-container">
-                            <i className={item.icon}></i>
-                          </div>
-                          <div>{item.name}</div>
-                          {item && item.children && item.children.length && (
-                            <div className="children-container">
-                              <i
-                                className={
-                                  item.url === active
-                                    ? 'fa fa-chevron-down icon-dropdown-size'
-                                    : 'fa fa-chevron-right icon-dropdown-size'
-                                }
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      {item.url === active &&
-                        item &&
-                        item.children &&
-                        item.children.map((childItem, index) => (
                           <div
-                            className={
-                              childItem.url === childMenuActive
-                                ? 'active-wrapper'
-                                : 'children-wrapper'
-                            }
-                            key={index}
-                            onClick={() => history.push(childItem.url)}
+                            className="menu-grid"
+                            onClick={() => {
+                              history.push(item.url)
+                              item && item.children && item.children.length
+                                ? childToggle(item.url)
+                                : toggle(item.url)
+                            }}
                           >
-                            <div
-                              className="menu-grid"
-                              onClick={() => childMenuToggle(childItem.url)}
-                            >
-                              <div>{childItem.name}</div>
+                            <div className="icon-container">
+                              <i className={item.icon}></i>
                             </div>
+                            <div>{item.name}</div>
+                            {item && item.children && item.children.length && (
+                              <div className="children-container">
+                                <i
+                                  className={
+                                    item.url === active
+                                      ? 'fa fa-chevron-down icon-dropdown-size'
+                                      : 'fa fa-chevron-right icon-dropdown-size'
+                                  }
+                                />
+                              </div>
+                            )}
                           </div>
-                        ))}
+                        </div>
+                        {item.url === active &&
+                          item &&
+                          item.children &&
+                          item.children.map((childItem, index) => (
+                            <div
+                              className={
+                                childItem.url === childMenuActive
+                                  ? 'active-wrapper'
+                                  : 'children-wrapper'
+                              }
+                              key={index}
+                              onClick={() => history.push(childItem.url)}
+                            >
+                              <div
+                                className="menu-grid"
+                                onClick={() => childMenuToggle(childItem.url)}
+                              >
+                                <div>{childItem.name}</div>
+                              </div>
+                            </div>
+                          ))}
+                      </UnlockAccess>
                     </>
                   ))}
                 </div>

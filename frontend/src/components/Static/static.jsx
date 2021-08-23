@@ -27,6 +27,13 @@ export const siteConfig = {
     { name: 'Products', width: 'medium' },
     { name: 'Actions', width: 'medium' },
   ],
+  myOrderTableHead: [
+    { name: 'Order ID', width: 'Medium' },
+    { name: 'Date', width: 'medium' },
+    { name: 'Name', width: 'Medium' },
+    { name: 'Order Status', width: 'medium' },
+    { name: 'Price', width: 'medium' },
+  ],
   wholeSaleData: [
     { label: '100-300', value: 100, price: 12.8 },
     { label: '301-500', value: 301, price: 11.5 },

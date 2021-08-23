@@ -72,7 +72,7 @@ const Product = ({
       {productLoader ? (
         <Loader title={activeTab === 'deleted_products' ? 'Deleted Products' : 'Products'} />
       ) : (
-        <div className="product-container container">
+        <div className="product-container">
           <div className="row">
             <div className="product-main-title ml-3 mr-4">Products</div>
 

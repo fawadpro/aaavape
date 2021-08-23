@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
 
+import { userRedirect } from '../../utils/user_redirect'
 import { fetchMenus } from '../../redux/actions/topMenu'
 import './top-navigation.scss'
 
@@ -21,12 +22,10 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
-  console.log('@@ data', childrenArray)
-
   const data = topMenuState !== undefined ? topMenuState : {}
   let objectKeys = Object.keys(data)
 
-  console.log('@@ ata', userDetail)
+  console.log('2@ userDetail', userDetail)
 
   return (
     <>
@@ -75,7 +74,14 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
           </div>
 
           <div className="col-md-2 text-right">
-            <span className="cursor-pointer" onClick={() => history.push('/login')}>
+            <span
+              className="cursor-pointer"
+              onClick={() =>
+                userDetail === undefined
+                  ? history.push('/login')
+                  : userRedirect(userDetail && userDetail.role, history)
+              }
+            >
               {userDetail ? (
                 <span style={{ color: '#F7AF3A' }}>
                   <span style={{ color: '#000' }}>Hello, </span>

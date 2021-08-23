@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import config from '../../config'
+import jwt_decode from 'jwt-decode'
 
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_LOGIN_LOADER = 'USER_LOGIN_LOADER'
@@ -13,13 +14,12 @@ export const USER_REGISTER_LOADER = 'USER_REGISTER_LOADER'
 export const USER_REGISTER = 'USER_REGISTER'
 export const USER_REGISTER_FAILURE = 'USER_REGISTER_FAILURE'
 
-export const UserLogin = (data) => {
+export const UserLogin = (data, userRedirect) => {
   return (dispatch) => {
     dispatch({ type: USER_LOGIN_LOADER, data: true })
     axios
       .post(`${config.apiPath}/api/v1/login`, data, { withCredentials: true })
       .then(function (response) {
-        window.location.href = '/dashboard'
         dispatch({ type: USER_LOGIN_LOADER, data: false })
         return dispatch({ type: USER_LOGIN, data: response.data })
       })

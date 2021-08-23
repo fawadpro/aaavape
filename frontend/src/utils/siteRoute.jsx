@@ -19,5 +19,6 @@ export const SiteRoute = {
     '/order',
     '/product',
     '/register',
+    '/order-history',
   ],
 }

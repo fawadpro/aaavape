@@ -79,8 +79,6 @@ const DesktopCart = ({ addToCartProductsState, createGeneralUserFun, history }) 
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
 
-  console.log('@@ extracted', extractedCartItem)
-
   return (
     <div className="desktop-cart-container">
       {extractedCartItem && extractedCartItem.length > 0 ? (

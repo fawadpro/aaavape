@@ -33,6 +33,7 @@ import EmailSuccess from './views/EmailSuccess'
 import ForgotPassword from './DesktopView/DesktopResetPassword'
 import NewPassword from './DesktopView/DesktopNewPassword'
 import Register from './views/Register'
+import OrderHistory from './DesktopView/DesktopOrderHistory'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
@@ -120,8 +121,16 @@ class App extends Component {
                 exact
                 path="/dashboard"
                 currentUser={userRole || null}
-                roles={['super_admin']}
+                roles={['super_admin', 'customer']}
                 component={Dashboard}
+              />
+
+              <PrivateRoute
+                exact
+                path="/order-history"
+                currentUser={userRole || null}
+                roles={['customer']}
+                component={OrderHistory}
               />
 
               <PrivateRoute

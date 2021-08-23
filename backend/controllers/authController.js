@@ -54,8 +54,6 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
 
   let user = await User.findOne({ email }).select("+password");
 
-  console.log("@@@ user", user);
-
   if (!user) {
     return next(new ErrorHandler("Email is not found", 404));
   }

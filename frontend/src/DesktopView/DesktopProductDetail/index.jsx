@@ -83,8 +83,6 @@ const DesktopProductDetail = ({
     extractedCartItem = productStringify
   }
 
-  console.log('@@ single', product)
-
   return singleProductLoaderState ? (
     <AsyncLoader />
   ) : (

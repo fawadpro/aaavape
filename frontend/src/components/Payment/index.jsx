@@ -60,8 +60,6 @@ const Payment = ({ history, addToCartProductsState }) => {
     }
   }, [])
 
-  console.log('@@ extractedCartItem', extractedCartItem)
-
   let total_amount = _.sumBy(extractedCartItem, function (item) {
     return item.quantity * item.price
   })
