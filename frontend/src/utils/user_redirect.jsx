@@ -13,5 +13,7 @@ export const userRedirect = (history) => {
     case 'super_admin':
       window.location.href = '/dashboard'
       break
+    default:
+      history.push('/login')
   }
 }

@@ -74,14 +74,7 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
           </div>
 
           <div className="col-md-2 text-right">
-            <span
-              className="cursor-pointer"
-              onClick={() =>
-                userDetail === undefined
-                  ? history.push('/login')
-                  : userRedirect(userDetail && userDetail.role, history)
-              }
-            >
+            <span className="cursor-pointer" onClick={() => userRedirect(history)}>
               {userDetail ? (
                 <span style={{ color: '#F7AF3A' }}>
                   <span style={{ color: '#000' }}>Hello, </span>
