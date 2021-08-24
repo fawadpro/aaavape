@@ -131,7 +131,12 @@ const SideBar = ({ children, location, history }) => {
                   <i className="fas fa-angle-down text-color"></i>
                   {showDropdown && (
                     <div className="dropdown-container">
-                      <div className="dropdown-container-item">Edit</div>
+                      <div
+                        className="dropdown-container-item"
+                        onClick={() => history.push('/edit-profile')}
+                      >
+                        Edit Profile
+                      </div>
                       <hr className="line-style" />
                       <div
                         className="dropdown-container-item"

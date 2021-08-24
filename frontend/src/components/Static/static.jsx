@@ -18,6 +18,10 @@ export const siteConfig = {
     { name: 'Date', width: 'medium' },
     { name: 'Actions', width: 'medium' },
   ],
+  countryCode: [
+    { label: 'China', value: 'China' },
+    { label: 'US', value: 'US' },
+  ],
   orderTableHead: [
     { name: 'Order ID', width: 'Medium' },
     { name: 'Date', width: 'medium' },

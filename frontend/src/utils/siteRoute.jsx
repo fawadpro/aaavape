@@ -20,5 +20,6 @@ export const SiteRoute = {
     '/product',
     '/register',
     '/order-history',
+    '/edit-profile',
   ],
 }

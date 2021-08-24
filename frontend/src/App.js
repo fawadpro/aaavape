@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { lazy, Suspense, Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
 import { isMobile } from 'react-device-detect'
@@ -10,6 +10,8 @@ import axios from 'axios'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import config from './config'
+
+import { userRedirect } from './utils/user_redirect'
 
 import { SiteRoute } from './utils/siteRoute'
 import AsyncLoader from './components/AsyncLoader'
@@ -34,6 +36,7 @@ import ForgotPassword from './DesktopView/DesktopResetPassword'
 import NewPassword from './DesktopView/DesktopNewPassword'
 import Register from './views/Register'
 import OrderHistory from './DesktopView/DesktopOrderHistory'
+import EditProfile from './DesktopView/DesktopEditProfile'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
@@ -51,6 +54,7 @@ class App extends Component {
       .then((res) => this.setState({ stripeApiKey: res.data.stripeApiKey }))
   }
   render() {
+    const { history, match } = this.props
     const token = Cookies.get('aaavape_user')
     const { stripeApiKey } = this.state
     const userDetail = token !== undefined && jwt_decode(token)
@@ -68,6 +72,8 @@ class App extends Component {
         }
       )
     }
+
+    console.log('@@ 2match', match, history)
 
     return (
       <Switch>
@@ -113,7 +119,12 @@ class App extends Component {
           </Route>
 
           <Route path={[SiteRoute.privateRoute]}>
-            <Route exact path="/login" render={(props) => <Login {...props} />} />
+            {token !== undefined && history.location.pathname === '/login' ? (
+              userRedirect(history)
+            ) : (
+              <Route exact path="/login" render={(props) => <Login {...props} />} />
+            )}
+
             <Route path="/register" render={(props) => <Register {...props} />} />
 
             <SideBar>
@@ -123,6 +134,14 @@ class App extends Component {
                 currentUser={userRole || null}
                 roles={['super_admin', 'customer']}
                 component={Dashboard}
+              />
+
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                currentUser={userRole || null}
+                roles={['customer', 'super_admin']}
+                component={EditProfile}
               />
 
               <PrivateRoute
@@ -165,4 +184,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withRouter(App)

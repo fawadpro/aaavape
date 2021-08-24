@@ -1,0 +1,19 @@
+/** @format */
+
+.desktop-edit-profile-container {
+  width: 650px;
+  min-height: 400px;
+  background: #fff;
+  margin: 30px 20px 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ebeff2;
+  .desktop-edit-profile-body {
+    padding: 20px;
+    .desktop-edit-profile-title {
+      font-weight: bold;
+      font-size: 25px;
+      color: #3b4349;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+  }
+}

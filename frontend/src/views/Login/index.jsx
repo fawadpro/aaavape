@@ -17,11 +17,15 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import './login-style.scss'
 
 const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
+  const user = Cookies.get('aaavape_user')
+  const userDetail = user !== undefined && jwt_decode(user)
+
   useMemo(() => {
     if (userLoginState && userLoginState.success) {
       let userDetail = jwt_decode(userLoginState && userLoginState.token)
-      userRedirect(userDetail.role)
+
       Cookies.set('aaavape_user', userLoginState && userLoginState.token)
+      return userRedirect(history)
     } else if (userLoginState && userLoginState.status === 'fail') {
       toast.error(userLoginState && userLoginState.message, {
         toastId: 'loginError',
@@ -35,14 +39,9 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
     }
   }, [userLoginState])
 
-  useEffect(() => {
-    const user = Cookies.get('aaavape_user')
-    if (user === undefined) {
-      history.push('/login')
-    } else {
-      return userRedirect(user && user.role, history)
-    }
-  }, [])
+  // useEffect(() => {
+  //   userRedirect(history)
+  // }, [])
   const loginCompanyUser = (value) => {
     userLoginFunc(value)
   }

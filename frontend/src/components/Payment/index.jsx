@@ -200,10 +200,7 @@ const Payment = ({ history, addToCartProductsState }) => {
           <div className="form-field mt-4 mb-3">
             <div className="field-title mb-2">Country</div>
             <Select
-              options={[
-                { label: 'China', value: 'china' },
-                { label: 'US', value: 'us' },
-              ]}
+              options={siteConfig.countryCode}
               onChange={(value) => setShippingAddress({ ...shippingAddress, country: value.label })}
               placeholder="Select Country"
             />

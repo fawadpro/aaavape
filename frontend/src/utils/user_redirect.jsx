@@ -1,12 +1,17 @@
 /** @format */
 
-export const userRedirect = (role, history) => {
-  switch (role) {
+import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
+
+export const userRedirect = (history) => {
+  const user = Cookies.get('aaavape_user')
+  const userDetail = user !== undefined && jwt_decode(user)
+  switch (userDetail.role) {
     case 'customer':
-      return (window.location.href = '/order-history')
+      window.location.href = '/order-history'
+      break
     case 'super_admin':
-      return (window.location.href = '/dashboard')
-    default:
-      history.push('/login')
+      window.location.href = '/dashboard'
+      break
   }
 }

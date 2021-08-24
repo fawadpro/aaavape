@@ -63,7 +63,7 @@ const OrderHistory = ({ fetchMyOrdersFun, allOrders, allOrderLoader, fetchFilter
                   ))}
                 </thead>
                 {allOrders && allOrders.orders && allOrders.orders.length === 0 ? (
-                  <div className="mt-4">No orders found</div>
+                  <div className="mt-4 pr-2 ml-4">No orders found</div>
                 ) : (
                   <tbody>
                     {allOrders &&
