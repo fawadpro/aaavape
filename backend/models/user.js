@@ -31,22 +31,46 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  address: {
-    type: String,
-    default: "",
-  },
-  postalCode: {
-    type: String,
-    default: "",
-  },
-  country: {
-    type: String,
-    default: "",
-  },
-  phone: {
-    type: String,
-    default: "",
-  },
+  address: [
+    {
+      name: {
+        type: String,
+        default: "",
+      },
+      company: {
+        type: String,
+        default: "",
+      },
+      address: {
+        type: String,
+        default: "",
+      },
+      apartment: {
+        type: String,
+        default: "",
+      },
+      city: {
+        type: String,
+        default: "",
+      },
+      country: {
+        type: String,
+        default: "",
+      },
+      province: {
+        type: String,
+        default: "",
+      },
+      postalCode: {
+        type: String,
+        default: "",
+      },
+      phone: {
+        type: String,
+        default: "",
+      },
+    },
+  ],
   avatar: {
     public_id: {
       type: String,

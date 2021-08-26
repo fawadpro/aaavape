@@ -16,4 +16,23 @@
       font-family: Helvetica, Arial, sans-serif;
     }
   }
+
+  .addresses-container {
+    box-shadow: 4px -1px 26px 0 rgba(0, 0, 0, 0.1);
+    padding: 13px;
+    border: 1px solid #edf0f1;
+    border-radius: 4px;
+    .address-main-title {
+      color: #3f4654;
+      font-weight: 500;
+      font-size: 18px;
+    }
+    .address-subtitle {
+      color: #8f949d;
+    }
+    .address-action {
+      color: var(--site-base-color);
+      cursor: pointer;
+    }
+  }
 }
