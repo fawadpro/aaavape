@@ -24,7 +24,9 @@ const Login = ({ userLoginFunc, userLoginLoader, userLoginState, history }) => {
     if (userLoginState && userLoginState.success) {
       let userDetail = jwt_decode(userLoginState && userLoginState.token)
 
-      Cookies.set('aaavape_user', userLoginState && userLoginState.token)
+      Cookies.set('aaavape_user', userLoginState && userLoginState.token, {
+        expires: 7,
+      })
       return userRedirect(history)
     } else if (userLoginState && userLoginState.status === 'fail') {
       toast.error(userLoginState && userLoginState.message, {
