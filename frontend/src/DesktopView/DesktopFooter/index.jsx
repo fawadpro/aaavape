@@ -1,10 +1,34 @@
 /** @format */
 
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 import './desktop-footer-style.scss'
+import Swal from 'sweetalert2'
 
-const DesktopFooter = () => {
+const DesktopFooter = ({ history }) => {
+  const [productValue, setProductValue] = useState('')
+  const [loader, setLoader] = useState(false)
+  const validateProduct = () => {
+    let bodyFormData = new FormData()
+    bodyFormData.append('sn', productValue)
+    setLoader(true)
+    axios
+      .post(
+        'https://enigmatic-badlands-40184.herokuapp.com/http://m.ruiywx.com/deepin2/index.php/Home/Scanlog/deep5',
+        bodyFormData
+      )
+      .then((res) => {
+        setLoader(false)
+        if (res.data.status === 'error') {
+          Swal.fire('Error!', res.data.message, 'error')
+        } else {
+          Swal.fire('Success', res.data.message, 'success')
+        }
+      })
+  }
+  window.scrollTo(0, 0)
   return (
     <div className="desktop-footer-container">
       <div className="footer-menu container">
@@ -42,13 +66,6 @@ const DesktopFooter = () => {
             <div className="col-sub-title">Warranty</div>
             <div className="col-sub-title">AAA Care</div>
           </div>
-          <div className="col-md-4">
-            <div className="col-main-title">
-              <span>SHIP FROM LOCAL WAREHOUSE</span>
-            </div>
-            <div className="col-sub-title">Russia</div>
-            <div className="col-sub-title">Philippine</div>
-          </div>
           <div className="col-md-2">
             <div className="col-main-title">
               <span> Follow Us! </span>
@@ -69,10 +86,36 @@ const DesktopFooter = () => {
               <i className="fab fa-linkedin"></i>
             </span>
           </div>
+          <div className="col-md-4">
+            <div className="col-main-title">
+              <span>PRODUCT AUTHENTICATION</span>
+            </div>
+            <div className="security-code">
+              <input
+                type="text"
+                placeholder="Security Code"
+                className="security-code-input"
+                onChange={(e) => setProductValue(e.target.value)}
+              />
+              <button
+                className="security-code-button"
+                onClick={() => validateProduct()}
+                disabled={loader}
+              >
+                {loader ? <i className={`fa fa-circle-o-notch fa-spin loader-area`}></i> : 'Enter'}
+              </button>
+            </div>
+            <div
+              className="col-sub-bold-title mt-2"
+              onClick={() => history.push('/product-verification')}
+            >
+              {'Click here to learn more >'}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default DesktopFooter
+export default withRouter(DesktopFooter)

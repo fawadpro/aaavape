@@ -36,6 +36,7 @@ import ForgotPassword from './DesktopView/DesktopResetPassword'
 import NewPassword from './DesktopView/DesktopNewPassword'
 import Register from './views/Register'
 import OrderHistory from './DesktopView/DesktopOrderHistory'
+import ProductVerification from './DesktopView/DesktopProductVerification'
 import EditProfile from './DesktopView/DesktopEditProfile'
 import AgeVerificationPopup from './DesktopView/AgeVerficationPopup'
 const Home = lazy(() => import('./views/Home'))
@@ -114,6 +115,11 @@ class App extends Component {
                 <>
                   <MainNav>
                     <Route exact path="/" render={(props) => <Home {...props} />} />
+                    <Route
+                      exact
+                      path="/product-verification"
+                      render={(props) => <ProductVerification {...props} />}
+                    />
                     <Route path="/email-success" render={(props) => <EmailSuccess {...props} />} />
                     <Route
                       path="/forgot-password"

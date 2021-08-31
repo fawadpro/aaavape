@@ -25,6 +25,7 @@ const whitelist = [
   "http://localhost:3001",
   "https://aaavape.herokuapp.com",
   "http://aaavape.herokuapp.com",
+  "http://m.ruiywx.com",
 ];
 
 const corsOptions = {

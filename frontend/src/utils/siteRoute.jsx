@@ -9,6 +9,7 @@ export const SiteRoute = {
     '/email-success',
     '/forgot-password',
     '/password/reset/:token',
+    '/product-verification',
   ],
   privateRoute: [
     '/login',
