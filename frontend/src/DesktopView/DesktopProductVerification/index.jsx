@@ -28,6 +28,7 @@ const DesktopProductVerfication = () => {
         }
       })
   }
+  window.scrollTo(0, 0)
   return (
     <div className="product-verification-container">
       <div className="product-verification-body">

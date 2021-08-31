@@ -28,7 +28,7 @@ const DesktopFooter = ({ history }) => {
         }
       })
   }
-  window.scrollTo(0, 0)
+
   return (
     <div className="desktop-footer-container">
       <div className="footer-menu container">
