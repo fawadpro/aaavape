@@ -39,8 +39,8 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
                     <div
                       className={
                         itemId === item.id
-                          ? 'col-1-4 text-center menu-item-hover '
-                          : 'col-1-4 text-center menu-item'
+                          ? 'col-1-4 text-center menu-item-hover  pt-1"'
+                          : 'col-1-4 text-center menu-item  pt-1"'
                       }
                       key={index}
                       onMouseEnter={() => {
@@ -70,10 +70,18 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
                     </div>
                   </>
                 ))}
+              <div className="col-5-5 pt-0">
+                <button
+                  className="verify-custom-button"
+                  onClick={() => history.push('/product-verification')}
+                >
+                  Verify
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="col-md-2 text-right">
+          <div className="col-md-2 text-right pt-1">
             <span className="cursor-pointer" onClick={() => userRedirect(history)}>
               {userDetail ? (
                 <span style={{ color: '#F7AF3A' }}>

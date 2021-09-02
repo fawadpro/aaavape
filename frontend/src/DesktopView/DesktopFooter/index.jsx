@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 
 const DesktopFooter = ({ history }) => {
   const [productValue, setProductValue] = useState('')
+  const [newsletterEmail, setNewsLetterEmail] = useState('')
   const [loader, setLoader] = useState(false)
   const validateProduct = () => {
     let bodyFormData = new FormData()
@@ -66,7 +67,7 @@ const DesktopFooter = ({ history }) => {
             <div className="col-sub-title">Warranty</div>
             <div className="col-sub-title">AAA Care</div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div className="col-main-title">
               <span> Follow Us! </span>
             </div>
@@ -86,7 +87,36 @@ const DesktopFooter = ({ history }) => {
               <i className="fab fa-linkedin"></i>
             </span>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
+            <div className="col-main-title">
+              <span>Newsletter</span>
+            </div>
+            <div className="security-code">
+              <input
+                type="text"
+                placeholder="Email Address"
+                className="security-code-input"
+                onChange={(e) => setNewsLetterEmail(e.target.value)}
+              />
+              <button
+                className="security-code-button"
+                onClick={() =>
+                  newsletterEmail
+                    ? setTimeout(() => {
+                        Swal.fire(
+                          'Success',
+                          'Your email is successfuly subscribed to newsletter',
+                          'success'
+                        )
+                      }, 300)
+                    : Swal.fire('Error', 'Email is Required', 'error')
+                }
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
+          <div className="col-md-4 product-verification-space">
             <div className="col-main-title">
               <span>PRODUCT AUTHENTICATION</span>
             </div>
