@@ -39,6 +39,7 @@ import OrderHistory from './DesktopView/DesktopOrderHistory'
 import ProductVerification from './DesktopView/DesktopProductVerification'
 import EditProfile from './DesktopView/DesktopEditProfile'
 import AgeVerificationPopup from './DesktopView/AgeVerficationPopup'
+import MobileProductVerification from './MobileView/MobileProductVerification'
 const Home = lazy(() => import('./views/Home'))
 const DesktopProductDetail = lazy(() => import('./DesktopView/DesktopProductDetail'))
 
@@ -110,6 +111,11 @@ class App extends Component {
               {isMobile ? (
                 <MobileMainNav>
                   <Route exact path="/" render={(props) => <Home {...props} />} />
+                  <Route
+                    exact
+                    path="/product-verification"
+                    render={(props) => <MobileProductVerification {...props} />}
+                  />
                 </MobileMainNav>
               ) : (
                 <>

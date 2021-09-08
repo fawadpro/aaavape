@@ -11,6 +11,10 @@ const DesktopProductVerfication = () => {
   const [productValue, setProductValue] = useState('')
   const [loader, setLoader] = useState(false)
   const validateProduct = () => {
+    if (!productValue) {
+      Swal.fire('Error!', 'Product code is required ', 'error')
+      return
+    }
     let bodyFormData = new FormData()
     bodyFormData.append('sn', productValue)
     setLoader(true)
