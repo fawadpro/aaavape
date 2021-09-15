@@ -10,7 +10,7 @@ import { renderFieldWithIcon, required } from '../../components/ReduxForm'
 const MobileLoginInner = ({ handleSubmit, userLoginLoader, history }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <div className="login-inner-container">
+      <div className="mobile-login-inner-container">
         <div className="field-space-between">
           <Field
             name="email"
@@ -58,7 +58,7 @@ const MobileLoginInner = ({ handleSubmit, userLoginLoader, history }) => {
           </span>
         </div>
 
-        <div className="login-footer-area">
+        <div className="mobile-login-footer-area">
           <div className="menu-color">Help</div>
           <div className="menu-color">Privacy</div>
           <div className="menu-color">Terms</div>
