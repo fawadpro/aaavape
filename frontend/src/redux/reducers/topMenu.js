@@ -11,7 +11,11 @@ const TopMenu = (state = initialState, action) => {
         ...state,
         topMenus: action.data,
       }
-
+    case ActionTypes.TOGGLE_MOBILE_MENU:
+      return {
+        ...state,
+        toggleMobileState: action.data,
+      }
     default:
       return {
         ...state,

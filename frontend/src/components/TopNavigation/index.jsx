@@ -25,8 +25,6 @@ const TopNavigation = ({ menuContent, fetchTopMenus, topMenuState, history }) =>
   const data = topMenuState !== undefined ? topMenuState : {}
   let objectKeys = Object.keys(data)
 
-  console.log('2@ userDetail', userDetail)
-
   return (
     <>
       <div className="top-navigation-container" onMouseLeave={() => setItemId('')}>

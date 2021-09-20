@@ -1,0 +1,79 @@
+/** @format */
+
+html,
+body {
+  margin: 0;
+}
+
+.mobile-menu-child-container {
+  background-color: #ebebeb;
+  min-height: 100vh;
+  transition: all 0.5s ease-in-out;
+  .child-container-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .menu-title {
+      font-weight: bold;
+      font-size: 29px;
+      color: #000;
+    }
+
+    .menu-subtitle {
+      font-family: 'Gotham Book', Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 24px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .menu-login-part {
+      margin-top: 10px;
+      .horizontal-line {
+        border-top: 1px solid #979797;
+        margin-bottom: 30px;
+      }
+
+      .grid-menu-container {
+        display: flex;
+        flex-direction: row;
+        margin: 10px 0 25px 0;
+        align-items: center;
+
+        .grid-item {
+          font-size: 20px;
+
+          .image-size {
+            width: 50px;
+            height: 50px;
+          }
+        }
+      }
+
+      .footer-mobile {
+        margin-top: 50px;
+        .social-button {
+          margin: 50px 0 20px 0;
+          margin: 0 auto;
+          width: 200px;
+          border-radius: 100px;
+          background: #f06a00;
+          padding: 10px;
+          color: #fff;
+          font-weight: bold;
+          text-align: center;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .top-left-arrow {
+      color: #f06a00;
+      font-size: 28px;
+    }
+  }
+}
