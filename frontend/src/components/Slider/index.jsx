@@ -17,7 +17,6 @@ class Slideshow extends Component {
       effect: props.effect,
       autoplay: props.autoplay,
       enableKeyboard: props.enableKeyboard,
-      slides: props.slides.length > 0 ? props.slides : props.children,
     }
 
     this.runSlideShow = this.runSlideShow.bind(this)
@@ -26,6 +25,14 @@ class Slideshow extends Component {
     this.increaseCount = this.increaseCount.bind(this)
     this.decreaseCount = this.decreaseCount.bind(this)
     this.handleKeyboard = this.handleKeyboard.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.slides && nextProps.slides.length > 0) {
+      this.setState({ slides: nextProps && nextProps.slides && nextProps.slides })
+    } else {
+      this.setState({ slides: nextProps && nextProps.children && nextProps.children })
+    }
   }
 
   componentDidMount() {
@@ -126,51 +133,58 @@ class Slideshow extends Component {
     const { slides, showIndex, useDotIndex, effect, showArrows } = this.state
     const { mobile } = this.props
 
+    console.log('2@@ slides', slides)
+
     let slideEffect = effect === undefined ? 'fade' : effect
     let slideShowSlides
     let slideShowIndex
 
     if (!this.props.children) {
-      slideShowSlides = slides.map((slide, i) => {
-        return (
-          <li
-            className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
-              this.state.currentSlide === i ? 'showing-' + slideEffect : ''
-            }`}
-            key={i}
-            style={{ backgroundImage: `url(${slide})` }}
-          />
-        )
-      })
+      slideShowSlides =
+        slides &&
+        slides.map((slide, i) => {
+          return (
+            <li
+              className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
+                this.state.currentSlide === i ? 'showing-' + slideEffect : ''
+              }`}
+              key={i}
+              style={{ backgroundImage: `url(${slide})` }}
+            />
+          )
+        })
     } else {
-      slideShowSlides = slides.map((slide, i) => {
-        return (
-          <li
-            className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
-              this.state.currentSlide === i ? 'showing-' + slideEffect : ''
-            }`}
-            key={i}
-          >
-            {slide}
-          </li>
-        )
-      })
+      slideShowSlides =
+        slides &&
+        slides.map((slide, i) => {
+          return (
+            <li
+              className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
+                this.state.currentSlide === i ? 'showing-' + slideEffect : ''
+              }`}
+              key={i}
+            >
+              {slide}
+            </li>
+          )
+        })
     }
 
     if (useDotIndex) {
       slideShowIndex = (
         <div className="show-index is-dot">
-          {slides.map((slide, i) => {
-            return (
-              <span
-                className={`dot ${this.state.currentSlide === i ? 'is-active' : ''}`}
-                key={`dot${i}`}
-                onClick={() => {
-                  this.updateSlideOnIndex(i)
-                }}
-              />
-            )
-          })}
+          {slides &&
+            slides.map((slide, i) => {
+              return (
+                <span
+                  className={`dot ${this.state.currentSlide === i ? 'is-active' : ''}`}
+                  key={`dot${i}`}
+                  onClick={() => {
+                    this.updateSlideOnIndex(i)
+                  }}
+                />
+              )
+            })}
         </div>
       )
     } else {

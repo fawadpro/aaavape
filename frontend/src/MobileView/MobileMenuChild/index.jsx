@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import { toggleMobileMenu } from '../../redux/actions/topMenu'
 import { fetchMenus } from '../../redux/actions/topMenu'
 import './mobile-menu-child.scss'
 
-const MobileMenuChild = ({ history, fetchTopMenus, topMenuState }) => {
+const MobileMenuChild = ({ history, fetchTopMenus, topMenuState, toggleMobileMenuFun }) => {
   const [showProductMenu, setShowProductMenu] = useState(false)
   const [childBackArrow, setChildBackArrow] = useState(false)
   const [childItem, setChildItem] = useState([])
@@ -45,8 +46,9 @@ const MobileMenuChild = ({ history, fetchTopMenus, topMenuState }) => {
                     <div
                       className="grid-menu-container"
                       onClick={() => {
-                        history.push(`/product-view/${item.id}`)
                         setShowProductMenu(false)
+                        toggleMobileMenuFun(false)
+                        history.push(`/product-view/${item.id}`)
                       }}
                     >
                       <div className="grid-item">
@@ -121,6 +123,7 @@ const MobileMenuChild = ({ history, fetchTopMenus, topMenuState }) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     fetchTopMenus: () => dispatch(fetchMenus()),
+    toggleMobileMenuFun: (data) => dispatch(toggleMobileMenu(data)),
   }
 }
 

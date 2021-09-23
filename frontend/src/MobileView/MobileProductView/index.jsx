@@ -86,7 +86,7 @@ const MobileProductView = ({
     product.varient &&
     product.varient.map((item) => ({ label: item.name, value: item.name, item }))
 
-  console.log('@@ product', singleProductState)
+  console.log('@@ product', sliderImages)
 
   return (
     <>
@@ -94,24 +94,22 @@ const MobileProductView = ({
         <AsyncLoader />
       ) : (
         <>
-          {sliderImages && sliderImages.length > 0 && (
-            <div className="mobile-product-slider">
-              <Slideshow
-                showIndex={false}
-                showArrows
-                autoplay
-                enableKeyboard
-                useDotIndex
-                slideInterval={5000}
-                defaultIndex={0}
-                slides={sliderImages}
-                effect={'bottom'}
-                height={'40%'}
-                width={'100%'}
-                mobile={true}
-              />
-            </div>
-          )}
+          <div className="mobile-product-slider">
+            <Slideshow
+              showIndex={false}
+              showArrows
+              autoplay
+              enableKeyboard
+              useDotIndex
+              slideInterval={5000}
+              defaultIndex={0}
+              slides={sliderImages}
+              effect={'bottom'}
+              height={'40%'}
+              width={'100%'}
+              mobile={true}
+            />
+          </div>
 
           <div className="mobile-product-info-container">
             <div className="product-info-title">{product && product.name}</div>
@@ -137,17 +135,6 @@ const MobileProductView = ({
                 }}
               />
             </div>
-            {product && product.varient && product.varient.length > 0 && (
-              <div className="product-info-dropdown">
-                <div className="mb-2 mt-2 font-weight-bold">Varient</div>
-                <Select
-                  options={renderVarients}
-                  placeholder="Select Varient"
-                  onChange={(value) => setActiveSlider(value.item)}
-                  className="mr-3"
-                />
-              </div>
-            )}
 
             <div className="product-whole-sale">
               <div className="product-table-header">
