@@ -124,6 +124,7 @@ class Slideshow extends Component {
 
   render() {
     const { slides, showIndex, useDotIndex, effect, showArrows } = this.state
+    const { mobile } = this.props
 
     let slideEffect = effect === undefined ? 'fade' : effect
     let slideShowSlides
@@ -133,7 +134,7 @@ class Slideshow extends Component {
       slideShowSlides = slides.map((slide, i) => {
         return (
           <li
-            className={`slide ${effect} ${
+            className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
               this.state.currentSlide === i ? 'showing-' + slideEffect : ''
             }`}
             key={i}
@@ -145,7 +146,7 @@ class Slideshow extends Component {
       slideShowSlides = slides.map((slide, i) => {
         return (
           <li
-            className={`slide ${effect} ${
+            className={`${mobile ? 'mobile-slide' : 'slide'} ${effect} ${
               this.state.currentSlide === i ? 'showing-' + slideEffect : ''
             }`}
             key={i}

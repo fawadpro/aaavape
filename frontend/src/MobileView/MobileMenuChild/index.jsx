@@ -44,7 +44,10 @@ const MobileMenuChild = ({ history, fetchTopMenus, topMenuState }) => {
                   <div className="menu-login-part" key={index}>
                     <div
                       className="grid-menu-container"
-                      onClick={() => history.push(`/product-detail/${item.id}`)}
+                      onClick={() => {
+                        history.push(`/product-view/${item.id}`)
+                        setShowProductMenu(false)
+                      }}
                     >
                       <div className="grid-item">
                         <img src={item.image} className="image-size" />

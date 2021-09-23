@@ -43,6 +43,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^10.15.6",
+    "swiper": "^7.0.6",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -50,8 +51,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild" : "NPM_CONFIG_PRODUCTION=false && npm install --prefix frontend && npm run build --prefix frontend"
-
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "eslintConfig": {
     "extends": [
@@ -65,7 +65,6 @@
       "not dead",
       "not op_mini all"
     ],
-
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
