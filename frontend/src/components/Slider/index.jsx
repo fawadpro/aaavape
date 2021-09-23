@@ -17,6 +17,7 @@ class Slideshow extends Component {
       effect: props.effect,
       autoplay: props.autoplay,
       enableKeyboard: props.enableKeyboard,
+      slides: props.slides ? props.slides : props.children,
     }
 
     this.runSlideShow = this.runSlideShow.bind(this)
@@ -28,6 +29,7 @@ class Slideshow extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('@@ nextprops = ', nextProps)
     if (nextProps && nextProps.slides && nextProps.slides.length > 0) {
       this.setState({ slides: nextProps && nextProps.slides && nextProps.slides })
     } else {
@@ -64,8 +66,9 @@ class Slideshow extends Component {
   }
 
   autoSlideshow() {
+    const { slides } = this.state
     this.setState({
-      currentSlide: (this.state.currentSlide + 1) % this.state.slides.length,
+      currentSlide: (this.state.currentSlide + 1) % slides && slides.length,
     })
   }
 
@@ -132,8 +135,6 @@ class Slideshow extends Component {
   render() {
     const { slides, showIndex, useDotIndex, effect, showArrows } = this.state
     const { mobile } = this.props
-
-    console.log('2@@ slides', slides)
 
     let slideEffect = effect === undefined ? 'fade' : effect
     let slideShowSlides
