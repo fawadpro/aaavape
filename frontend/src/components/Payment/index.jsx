@@ -1,13 +1,8 @@
 /** @format */
 
 import React, { useState, useEffect } from 'react'
-import {
-  useStripe,
-  useElements,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-} from '@stripe/react-stripe-js'
+import CreditCardInput from 'react-credit-card-input'
+
 import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
 import _ from 'lodash'
@@ -22,17 +17,6 @@ import CustomButton from '../../components/Button'
 import CreditCard from '../../images/credit-card.jpg'
 import './payment-style.scss'
 
-const options = {
-  style: {
-    base: {
-      fontSize: '16px',
-    },
-    invalid: {
-      color: '#9e2146',
-    },
-  },
-}
-
 const Payment = ({ history, addToCartProductsState }) => {
   const [extractedCartItem, setExtractedCartItem] = useState('')
   const [orderLoader, setOrderLoader] = useState(false)
@@ -43,8 +27,11 @@ const Payment = ({ history, addToCartProductsState }) => {
     postalCode: '',
     country: '',
   })
-  const stripe = useStripe()
-  const elements = useElements()
+  const [paymentInformation, setPaymentInformation] = useState({
+    cc: '',
+    cvv: '',
+    expiry: '',
+  })
 
   const token = Cookies.get('aaavape_user')
   const userDetail = token !== undefined && jwt_decode(token)
@@ -64,8 +51,15 @@ const Payment = ({ history, addToCartProductsState }) => {
     return item.quantity * item.price
   })
 
+  let expiryMask = paymentInformation.expiry.replace(/\//g, '')
+
+  total_amount = Math.ceil(total_amount)
+
   const paymentData = {
-    amount: Math.round(total_amount * 100),
+    amount: total_amount.toString(),
+    cc: paymentInformation.cc.replace(/\s/g, ''),
+    cvv: paymentInformation.cvv,
+    expire: expiryMask.replace(/\s/g, ''),
   }
 
   let createOrder = {
@@ -88,40 +82,18 @@ const Payment = ({ history, addToCartProductsState }) => {
   const submitHandler = async () => {
     setOrderLoader(true)
     let res
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-
-      res = await axios.post(`${apiConfig.apiPath}/api/v1/payment/process`, paymentData, config)
-
-      const clientSecret = res.data.client_secret
-
-      console.log(clientSecret)
-
-      if (!stripe || !elements) {
-        return
-      }
-
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardNumberElement),
-          billing_details: {
-            name: userDetail && userDetail.name,
-            email: userDetail && userDetail.email,
-          },
-        },
-      })
-
-      if (result.error) {
-        Swal.fire('Error !', 'Something went wrong', 'error')
-      } else {
-        if (result.paymentIntent.status === 'succeeded') {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    res = await axios
+      .post(`${apiConfig.apiPath}/api/v1/payment/processnew`, paymentData, config)
+      .then((res) => {
+        if (res.data.hasOwnProperty('success')) {
           createOrder.paymentInfo = {
-            id: result.paymentIntent.id,
-            status: result.paymentIntent.status,
+            id: res.data.id,
+            status: 'Pending',
           }
 
           axios.post(`${apiConfig.apiPath}/api/v1/new-order`, createOrder).then((res) => {
@@ -135,11 +107,52 @@ const Payment = ({ history, addToCartProductsState }) => {
         } else {
           Swal.fire('Error !', 'There is some issue while payment processing', 'error')
         }
-      }
-    } catch (error) {
-      Swal.fire('Error !', 'There is some issue while payment processing', 'error')
-    }
+      })
   }
+
+  //   const clientSecret = res.data.client_secret
+
+  //   console.log(clientSecret)
+
+  //   if (!stripe || !elements) {
+  //     return
+  //   }
+
+  //   const result = await stripe.confirmCardPayment(clientSecret, {
+  //     payment_method: {
+  //       cc: elements.getElement(CardNumberElement),
+  //       billing_details: {
+  //         name: userDetail && userDetail.name,
+  //         email: userDetail && userDetail.email,
+  //       },
+  //     },
+  //   })
+
+  //   if (result.error) {
+  //     Swal.fire('Error !', 'Something went wrong', 'error')
+  //   } else {
+  //     if (result.paymentIntent.status === 'succeeded') {
+  //       createOrder.paymentInfo = {
+  //         id: result.paymentIntent.id,
+  //         status: result.paymentIntent.status,
+  //       }
+
+  //       axios.post(`${apiConfig.apiPath}/api/v1/new-order`, createOrder).then((res) => {
+  //         Swal.fire('Success !', 'Order has been placed successfully', 'success')
+  //         localStorage.removeItem('addToCart')
+  //         setOrderLoader(false)
+  //         setTimeout(() => {
+  //           history.push('/')
+  //         }, 1000)
+  //       })
+  //     } else {
+  //       Swal.fire('Error !', 'There is some issue while payment processing', 'error')
+  //     }
+  //   }
+  // } catch (error) {
+  //   Swal.fire('Error !', 'There is some issue while payment processing', 'error')
+  // }
+
   return (
     <div className="credit-card-container">
       <div className="image-section">
@@ -150,18 +163,33 @@ const Payment = ({ history, addToCartProductsState }) => {
           <div className="payment-detail-title">Payment Details</div>
           <div>Complete your purchase by providing your payment details</div>
           <hr />
-          <div className="form-field mt-4 mb-3">
-            <div className="field-title mb-2">Credit Card Number</div>
-            <CardNumberElement type="text" className="form-control" options={options} />
-          </div>
-          <div className="form-field mt-4 mb-3">
-            <div className="field-title mb-2">Card Expiry</div>
-            <CardExpiryElement type="text" className="form-control" options={options} />
-          </div>
-          <div className="form-field mt-4 mb-4">
-            <div className="field-title mb-2">Card CSV</div>
-            <CardCvcElement type="text" className="form-control" options={options} />
-          </div>
+          <CreditCardInput
+            cardNumberInputProps={{
+              value: paymentInformation.cc,
+              onChange: (e) =>
+                setPaymentInformation({
+                  ...paymentInformation,
+                  cc: e.target.value,
+                }),
+            }}
+            cardExpiryInputProps={{
+              value: paymentInformation.expiry,
+              onChange: (e) =>
+                setPaymentInformation({
+                  ...paymentInformation,
+                  expiry: e.target.value,
+                }),
+            }}
+            cardCVCInputProps={{
+              value: paymentInformation.cvv,
+              onChange: (e) =>
+                setPaymentInformation({
+                  ...paymentInformation,
+                  cvv: e.target.value,
+                }),
+            }}
+            fieldClassName="input"
+          />
 
           <hr />
           <div className="payment-detail-title">Billing Address</div>
